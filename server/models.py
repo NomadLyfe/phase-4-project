@@ -15,7 +15,8 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
 
-    reviews = db.relationship('Review', back_populates='user')
+    reviews = db.relationship('Review', back_populates='user', cascade='all, delete-orphan')
+    restaurants = association_proxy('reviews', 'restaurant', creator=lambda restaurant_obj: Review(restaurant=restaurant_obj))
 
     def __repr__(self):
         return f'User {self.username}, ID {self.id}'
@@ -65,4 +66,5 @@ class Restaurant(db.Model, SerializerMixin):
     name = db.Column(db.String)
     address = db.Column(db.String)
 
-    reviews = db.relationship('Review', back_populates='restaurant')
+    reviews = db.relationship('Review', back_populates='restaurant', cascade='all, delete-orphan')
+    users = association_proxy('reviews', 'user', creator=lambda user_obj: Review(user=user_obj))

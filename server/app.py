@@ -16,20 +16,17 @@ bcrypt = Bcrypt(app)
 
 # Views go here!
 
-@app.route('/')
-def index():
-    return '<h1>Project Server</h1>'
+class Login(Resource):
+    def post(self):
+        username = request.get_jason()['username']
+        user = User.query.filter_by(username = username)
+        password = request.get_json()['password']
+        if user.authenticate(password):
+            session['user_id'] = user.id
+            return user.to_dict(), 200
+        return {'error': 'Invalid username or password'}, 401
 
-@app.route('/login')
-def login():
-    username = request.get_jason()['username']
-    user = User.query.filter_by(username = username)
-    password = request.get_json()['password']
-    if user.authenticate(password):
-        session['user_id'] = user.id
-        return user.to_dict(), 200
-    return {'error': 'Invalid username or password'}, 401
-
+api.add_resource(Login, '/login', endpoint='login')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
