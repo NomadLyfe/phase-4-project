@@ -16,6 +16,13 @@ bcrypt = Bcrypt(app)
 
 # Views go here!
 
+class checkSession(Resource):
+    def get(self):
+        if session['user_id']:
+            user = User.query.filter_by(id = session['user_id']).first()
+            return user.to_dict(), 200
+        return {'error': 'Not logged in'}, 401
+
 class Login(Resource):
     def post(self):
         username = request.get_jason()['username']

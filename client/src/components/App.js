@@ -11,16 +11,22 @@ function App() {
             if (resp.ok) {
                 resp.json().then((user) => setUser(user));
             }
+            throw r
         });
     }, []);
+
+    function handleLogin(e) {
+        e.preventDefault();
+        fetch()
+    }
 
     return (
         <>
             <NavBar user={user} />
             <main>
                 <Switch>
-                    <Route>
-
+                    <Route exact path='/login'>
+                        <Login handleSubmit={handleLogin} handleChange={} user={user} />
                     </Route>
                 </Switch>
             </main>
