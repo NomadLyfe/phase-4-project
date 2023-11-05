@@ -1,6 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import validates
 
 from config import db
 from app import bcrypt
@@ -33,8 +34,18 @@ class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String)
+    review = db.Column(db.string)
 
     #Realtionships here!
+
+    @validates('title', 'review')
+    def validate(self, key, value):
+        if key == 'title' and len(value) > 500:
+            raise ValueError('Title is too long.')
+        if key == 'review' and len(value) > 50:
+            raise ValueError('Review is too long.')
+        return value
     
 
 class Restaurant(db.Model, SerializerMixin):
@@ -45,4 +56,3 @@ class Restaurant(db.Model, SerializerMixin):
     address = db.Column(db.String)
 
     #Realtionships here!
-
