@@ -9,11 +9,13 @@ from app import bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
+    serialize_rules = ('-reviews.user',)
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
 
-    #Realtionships here!
+    reviews = db.relationship('Review', back_populates='user')
 
     def __repr__(self):
         return f'User {self.username}, ID {self.id}'
@@ -33,11 +35,17 @@ class User(db.Model, SerializerMixin):
 class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
+    serialize_rules = ('-user.reviews', '-restaurant.reviews',)
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
     review = db.Column(db.string)
 
-    #Realtionships here!
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'))
+
+    user = db.relationship('User', back_populates='reviews')
+    restaurant = db.relationship('Restaurant', back_populates='reviews')
 
     @validates('title', 'review')
     def validate(self, key, value):
@@ -50,9 +58,11 @@ class Review(db.Model, SerializerMixin):
 
 class Restaurant(db.Model, SerializerMixin):
     __tablename__ = 'restaurants'
+    
+    serialize_rules = ('-reviews.restaurant',)
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     address = db.Column(db.String)
 
-    #Realtionships here!
+    reviews = db.relationship('Review', back_populates='restaurant')
