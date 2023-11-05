@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Login({ handleSubmit, user  }) {
+function Signup({ handleSubmit, user  }) {
     const [loginData, setLoginData] = useState({'username': null, 'password': null})
 
     function handleChange(e) {
@@ -10,16 +10,19 @@ function Login({ handleSubmit, user  }) {
     return (
         <div>
             {!user ? <form onSubmit={handleSubmit} className='loginform'>
-				<label id='username'>Username</label>
+				<label id='username'>Create a username: </label>
 				<input type='text' onChange={handleChange} value={loginData.id} />
 				<br />
-				<label id='password'>Password</label>
+				<label id='password'>Create a password: </label>
 				<input type='password' onChange={handleChange} value={loginData.password} />
 				<br />
+                <label id='password'>Re-enter your password: </label>
+				<input type='password' onChange={handleChange} value={loginData.password} />
+                <br />
 				<button>Log In</button>
 			</form> : <p>Congratulations! You are logged in!</p>}
         </div>
     );
 }
 
-export default Login;
+export default Signup;
