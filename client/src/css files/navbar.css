@@ -1,0 +1,32 @@
+img {
+    height: 10vw;
+    margin: 10px;
+}
+
+.navbar {
+    display: flex;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid #093d65;
+    background-color: #f98e54;
+    color: #093d65;
+    width: 80px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+nav a:hover {
+    background-color: #f98e5480;
+    cursor: pointer;
+  }

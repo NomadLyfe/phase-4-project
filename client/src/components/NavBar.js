@@ -12,13 +12,16 @@ function NavBar({ user, setUser }) {
         });
     }
     return (
-        <nav>
+        <div className="navbar">
             <img src={logo} alt='logo' className='navLogo' />
-            <NavLink to='/' >Home</NavLink>
-            {!user ? <NavLink to="/login" >Login</NavLink> : null}
-            {user ? <Link to="/" onClick={handleLogoutClick} >Log Out</Link> : null}
-            {!user ? <NavLink to='/signup'>Signup</NavLink> : null}
-        </nav>
+            <nav>
+                
+                <NavLink to='/' >Home</NavLink>
+                {!user ? <NavLink to="/login" >Login</NavLink> : null}
+                {user ? <Link to="/" onClick={handleLogoutClick} >Log Out</Link> : null}
+                {!user ? <NavLink to='/signup'>Signup</NavLink> : null}
+            </nav>
+        </div>
   );
 }
 
