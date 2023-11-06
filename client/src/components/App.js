@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import Login from "./Login";
 import Signup from "./Signup";
 import Home from "./Home";
+import '../css files/app.css'
 
 function App() {
     const [user, setUser] = useState(null);
@@ -28,6 +29,9 @@ function App() {
                     </Route>
                     <Route exact path='/signup'>
                         <Signup onLogin={setUser} user={user} />
+                    </Route>
+                    <Route>
+                        
                     </Route>
                 </Switch>
             </main>

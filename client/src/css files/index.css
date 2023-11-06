@@ -3,5 +3,9 @@
   --header: #fff;
   --link: #61dafb;
   --text: hsla(0, 0%, 100%, 0.88);
+  background-image: url('../images/fine_dining_4.jpg');
+  background-position-y: -100px;
+  background-size: 100vw;
+  background-repeat: no-repeat;
 }
 

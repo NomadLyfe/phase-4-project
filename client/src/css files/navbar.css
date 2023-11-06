@@ -3,16 +3,12 @@
     margin: 10px;
 }
 
-.navbar {
-    display: flex;
-}
-
 nav {
     display: flex;
     align-items: center;
 }
 
-nav a {
+nav .link {
     text-decoration: none;
     border-radius: 5px;
     border: 1px solid #093d65;
@@ -26,7 +22,50 @@ nav a {
     margin: 10px;
 }
 
-nav a:hover {
+nav .link:hover {
     background-color: #f98e5480;
+    transition-duration: 1s;
     cursor: pointer;
   }
+
+nav img {
+    width: 180px;
+    margin: 10px;
+    margin-left: 26px;
+    margin-top: 24px;
+}
+
+nav form {
+    border-radius: 5px;
+    border: 1px solid #093d65;
+    color: #093d65;
+    margin: 0px 13.5vw;
+}
+
+nav input {
+    width: 20vw;
+    height: 50px;
+    border-radius: 4px;
+    border: 0px;
+    color: #093d65;
+    padding-left: 20px;
+}
+
+nav input:focus {
+    outline-width: 0;
+}
+
+nav button {
+    width: 65px;
+    height: 54px;
+    border-radius: 4px;
+    border: 0px;
+    background-color: #f98e54;
+    color: #093d65;
+}
+
+nav button:hover {
+    background-color: #f98e5480;
+    transition-duration: 1s;
+    cursor: pointer;
+}

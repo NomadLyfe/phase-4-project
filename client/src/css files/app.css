@@ -3,6 +3,50 @@
     src: url('../fonts/dosisregular.ttf');
 }
 
-main {
+main, input, button, a, input::placeholder {
     font-family: dosis;
+    font-size: medium;
+    color: #093d65;
+}
+
+.welcome {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 500px;
+}
+
+.form form {
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #093d65;
+}
+
+.form form * {
+    margin: 10px;
+}
+
+.form form button {
+    border-radius: 5px;
+    border: 1px solid #093d65;
+    background-color: #f98e54;
+    padding: 5px;
+}
+
+.form form button:hover {
+    background-color: #f98e5480;
+    transition-duration: 1s;
+    cursor: pointer;
+}
+
+input:focus {
+    outline: none;
 }

@@ -29,7 +29,7 @@ function Login({ onLogin, user }) {
     })
 
     return (
-        <div>
+        <div className="form">
             {!user ? <form onSubmit={formik.handleSubmit} className='loginform'>
 				<label id='username'>Username</label>
 				<input type='text' name='username' onChange={formik.handleChange} value={formik.values.username} />
