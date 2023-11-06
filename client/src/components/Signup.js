@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function Signup({ onLogin }) {
+function Signup({ onLogin, user }) {
     const formSchema = yup.object().shape({
         username: yup.string().required('Must enter username').max(20),
         password: yup.string().required('Must enter password').max(20),
@@ -17,7 +17,7 @@ function Signup({ onLogin }) {
         validationSchema: formSchema,
         onSubmit: (values) => {
             if (values.password === values.passwordConfirmation) {
-                fetch('http://127.0.0.1:5555/signup', {
+                fetch('/signup', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -27,7 +27,6 @@ function Signup({ onLogin }) {
                     if (resp.ok) {
                         resp.json().then((user) => onLogin(user));
                     }
-                    throw resp;
                 });
             } else {
                 alert('\nYour passwords do not match!')
@@ -37,7 +36,7 @@ function Signup({ onLogin }) {
 
     return (
         <div>
-            <form onSubmit={formik.handleSubmit} className='loginform'>
+            {!user ? <form onSubmit={formik.handleSubmit} className='loginform'>
 				<label id='username'>Create a username: </label>
 				<input type='text' name='username' onChange={formik.handleChange} value={formik.values.username} />
 				<br />
@@ -48,7 +47,7 @@ function Signup({ onLogin }) {
 				<input type='password' name='passwordConfirmation' onChange={formik.handleChange} value={formik.values.passwordConfirmation} />
                 <br />
 				<button type='submit'>Sign Up</button>
-			</form>
+			</form> : <p>Congratulations! You are logged in!</p>}
         </div>
     );
 }

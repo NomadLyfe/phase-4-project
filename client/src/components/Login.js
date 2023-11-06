@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function Login({ onLogin }) {
+function Login({ onLogin, user }) {
     const formSchema = yup.object().shape({
         username: yup.string().required('Must enter username').max(20),
         password: yup.string().required('Must enter password').max(20)
@@ -14,7 +14,7 @@ function Login({ onLogin }) {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch('http://127.0.0.1:5555/login', {
+            fetch('/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -24,14 +24,13 @@ function Login({ onLogin }) {
                 if (resp.ok) {
                     resp.json().then((user) => onLogin(user));
                 }
-                throw resp;
             });
         }
     })
 
     return (
         <div>
-            <form onSubmit={formik.handleSubmit} className='loginform'>
+            {!user ? <form onSubmit={formik.handleSubmit} className='loginform'>
 				<label id='username'>Username</label>
 				<input type='text' name='username' onChange={formik.handleChange} value={formik.values.username} />
 				<br />
@@ -39,7 +38,7 @@ function Login({ onLogin }) {
 				<input type='password' name='password' onChange={formik.handleChange} value={formik.values.password} />
 				<br />
 				<button type='submit'>Log In</button>
-			</form>
+			</form> : <p>Congratulations! You are logged in!</p>}
         </div>
     );
 }

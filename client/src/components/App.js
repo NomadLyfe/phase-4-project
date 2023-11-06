@@ -7,13 +7,11 @@ import Home from "./Home";
 
 function App() {
     const [user, setUser] = useState(null);
-    console.log(user)
     useEffect(() => {
-        fetch('http://127.0.0.1:5555/check_session').then((resp) => {
+        fetch('/check_session').then((resp) => {
             if (resp.ok) {
                 resp.json().then((user) => setUser(user));
             }
-            throw resp;
         });
     }, []);
 
@@ -26,10 +24,10 @@ function App() {
                         <Home />
                     </Route>
                     <Route exact path='/login'>
-                        <Login onLogin={setUser} />
+                        <Login onLogin={setUser} user={user} />
                     </Route>
                     <Route exact path='/signup'>
-                        <Signup onLogin={setUser} />
+                        <Signup onLogin={setUser} user={user} />
                     </Route>
                 </Switch>
             </main>
