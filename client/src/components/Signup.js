@@ -1,43 +1,51 @@
-import React, { useState } from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 function Signup({ onLogin }) {
-    const [signupData, setSignupData] = useState({'username': null, 'password': null, 'passwordConfirmation': null})
+    const formSchema = yup.object().shape({
+        username: yup.string().required('Must enter username').max(20),
+        password: yup.string().required('Must enter password').max(20),
+        passwordConfirmation: yup.string('Must enter matching password').max(20)
+    });
 
-    function handleChange(e) {
-        setSignupData({...signupData, [e.target.previousSibling.id]: e.target.vlaue});
-    }
-
-    function handleSubmit(e) {
-        e.preventdefault();
-        if (signupData.password === signupData.passwordConfirmation) {
-            fetch('/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({'username': signupData.username, 'password': signupData.password})
-            }).then((resp) => {
-                if (resp.ok) {
-                    resp.json().then((user) => onLogin(user));
-                }
-                throw resp;
-            });
-        } else {
-            alert('\nYour passwords do not match!')
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            password: "",
+            passwordConfirmation: ""
+        },
+        validationSchema: formSchema,
+        onSubmit: (values) => {
+            if (formik.values.password === formik.values.passwordConfirmation) {
+                fetch('/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(values, null, 2)
+                }).then((resp) => {
+                    if (resp.ok) {
+                        resp.json().then((user) => onLogin(user));
+                    }
+                    throw resp;
+                });
+            } else {
+                alert('\nYour passwords do not match!')
+            }
         }
-    }
+    })
 
     return (
         <div>
-            <form onSubmit={handleSubmit} className='loginform'>
+            <form onSubmit={formik.handleSubmit} className='loginform'>
 				<label id='username'>Create a username: </label>
-				<input type='text' name='username' onChange={handleChange} value={signupData.username} />
+				<input type='text' name='username' onChange={formik.handleChange} value={formik.values.username} />
 				<br />
 				<label id='password'>Create a password: </label>
-				<input type='password' name='password' onChange={handleChange} value={signupData.password} />
+				<input type='password' name='password' onChange={formik.handleChange} value={formik.values.password} />
 				<br />
                 <label id='password'>Re-enter your password: </label>
-				<input type='password' name='passwordConfirmation' onChange={handleChange} value={signupData.passwordConfirmation} />
+				<input type='password' name='passwordConfirmation' onChange={formik.handleChange} value={formik.values.passwordConfirmation} />
                 <br />
 				<button>Log In</button>
 			</form>
