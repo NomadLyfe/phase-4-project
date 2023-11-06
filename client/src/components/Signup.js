@@ -1,26 +1,46 @@
 import React, { useState } from "react";
 
-function Signup({ handleSubmit, user  }) {
-    const [loginData, setLoginData] = useState({'username': null, 'password': null})
+function Signup({ onLogin }) {
+    const [signupData, setSignupData] = useState({'username': null, 'password': null, 'passwordConfirmation': null})
 
     function handleChange(e) {
-        setLoginData({...loginData, [e.target.previousSibling.id]: e.target.vlaue});
+        setSignupData({...signupData, [e.target.previousSibling.id]: e.target.vlaue});
+    }
+
+    function handleSubmit(e) {
+        e.preventdefault();
+        if (signupData.password === signupData.passwordConfirmation) {
+            fetch('/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'username': signupData.username, 'password': signupData.password})
+            }).then((resp) => {
+                if (resp.ok) {
+                    resp.json().then((user) => onLogin(user));
+                }
+                throw resp;
+            });
+        } else {
+            alert('\nYour passwords do not match!')
+        }
     }
 
     return (
         <div>
-            {!user ? <form onSubmit={handleSubmit} className='loginform'>
+            <form onSubmit={handleSubmit} className='loginform'>
 				<label id='username'>Create a username: </label>
-				<input type='text' onChange={handleChange} value={loginData.id} />
+				<input type='text' name='username' onChange={handleChange} value={signupData.username} />
 				<br />
 				<label id='password'>Create a password: </label>
-				<input type='password' onChange={handleChange} value={loginData.password} />
+				<input type='password' name='password' onChange={handleChange} value={signupData.password} />
 				<br />
                 <label id='password'>Re-enter your password: </label>
-				<input type='password' onChange={handleChange} value={loginData.password} />
+				<input type='password' name='passwordConfirmation' onChange={handleChange} value={signupData.passwordConfirmation} />
                 <br />
 				<button>Log In</button>
-			</form> : <p>Congratulations! You are logged in!</p>}
+			</form>
         </div>
     );
 }

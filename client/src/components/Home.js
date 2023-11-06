@@ -3,7 +3,7 @@ import React from "react";
 function Home() {
 
     return (
-        <h1>Welcome to Menu Masters</h1>
+        <h1>Welcome to Menu Masters!!</h1>
     );
 }
 

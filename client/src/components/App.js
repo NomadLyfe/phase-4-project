@@ -13,19 +13,9 @@ function App() {
             if (resp.ok) {
                 resp.json().then((user) => setUser(user));
             }
-            throw resp
+            throw resp;
         });
     }, []);
-
-    function handleLogin(e) {
-        e.preventDefault();
-        fetch()
-    }
-
-    function handleSignup(e) {
-        e.preventDefault();
-        fetch()
-    }
 
     return (
         <>
@@ -36,10 +26,10 @@ function App() {
                         <Home />
                     </Route>
                     <Route exact path='/login'>
-                        <Login handleSubmit={handleLogin} user={user} />
+                        <Login onLogin={setUser} />
                     </Route>
                     <Route exact path='/signup'>
-                        <Signup handleSubmit={handleSignup} user={user} />
+                        <Signup user={user} />
                     </Route>
                 </Switch>
             </main>

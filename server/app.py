@@ -16,7 +16,21 @@ bcrypt = Bcrypt(app)
 
 # Views go here!
 
-class checkSession(Resource):
+class Signup(Resource):
+    def post(self):
+        try:
+            user = User(username=request.get_json().get('username'))
+            user.password_hash = request.get_json().get('password')
+            if user:
+                db.session.add(user)
+                db.session.commit()
+                session['user_id'] = user.id
+                return user.to_dict(), 201
+            return {'error': 'Invalid information submitted'}, 422
+        except:
+            return {'error': 'Invalid user information'}, 422
+
+class CheckSession(Resource):
     def get(self):
         if session['user_id']:
             user = User.query.filter_by(id = session['user_id']).first()
@@ -34,6 +48,8 @@ class Login(Resource):
         return {'error': 'Invalid username or password'}, 401
 
 api.add_resource(Login, '/login', endpoint='login')
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
+api.add_resource(Signup, '/signup', endpoint='signup')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

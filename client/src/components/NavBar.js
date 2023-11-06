@@ -15,7 +15,6 @@ function NavBar({ user, setUser }) {
         <div className="navbar">
             <img src={logo} alt='logo' className='navLogo' />
             <nav>
-                
                 <NavLink to='/' >Home</NavLink>
                 {!user ? <NavLink to="/login" >Login</NavLink> : null}
                 {user ? <Link to="/" onClick={handleLogoutClick} >Log Out</Link> : null}

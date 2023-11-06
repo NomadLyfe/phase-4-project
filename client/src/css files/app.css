@@ -1,0 +1,8 @@
+@font-face {
+    font-family: dosis;
+    src: url('../fonts/dosisregular.ttf');
+}
+
+main {
+    font-family: dosis;
+}
