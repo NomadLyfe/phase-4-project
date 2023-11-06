@@ -14,7 +14,7 @@ function Login({ onLogin }) {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch('/login', {
+            fetch('http://127.0.0.1:5555/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -33,12 +33,12 @@ function Login({ onLogin }) {
         <div>
             <form onSubmit={formik.handleSubmit} className='loginform'>
 				<label id='username'>Username</label>
-				<input type='text' onChange={formik.handleChange} value={formik.values.username} />
+				<input type='text' name='username' onChange={formik.handleChange} value={formik.values.username} />
 				<br />
 				<label id='password'>Password</label>
-				<input type='password' onChange={formik.handleChange} value={formik.values.password} />
+				<input type='password' name='password' onChange={formik.handleChange} value={formik.values.password} />
 				<br />
-				<button>Log In</button>
+				<button type='submit'>Log In</button>
 			</form>
         </div>
     );

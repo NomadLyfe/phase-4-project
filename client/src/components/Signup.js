@@ -16,8 +16,8 @@ function Signup({ onLogin }) {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            if (formik.values.password === formik.values.passwordConfirmation) {
-                fetch('/signup', {
+            if (values.password === values.passwordConfirmation) {
+                fetch('http://127.0.0.1:5555/signup', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ function Signup({ onLogin }) {
                 <label id='password'>Re-enter your password: </label>
 				<input type='password' name='passwordConfirmation' onChange={formik.handleChange} value={formik.values.passwordConfirmation} />
                 <br />
-				<button>Log In</button>
+				<button type='submit'>Sign Up</button>
 			</form>
         </div>
     );

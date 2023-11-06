@@ -7,9 +7,9 @@ import Home from "./Home";
 
 function App() {
     const [user, setUser] = useState(null);
-
+    console.log(user)
     useEffect(() => {
-        fetch('/check_session').then((resp) => {
+        fetch('http://127.0.0.1:5555/check_session').then((resp) => {
             if (resp.ok) {
                 resp.json().then((user) => setUser(user));
             }
@@ -29,7 +29,7 @@ function App() {
                         <Login onLogin={setUser} />
                     </Route>
                     <Route exact path='/signup'>
-                        <Signup user={user} />
+                        <Signup onLogin={setUser} />
                     </Route>
                 </Switch>
             </main>
