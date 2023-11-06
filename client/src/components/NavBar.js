@@ -3,11 +3,11 @@ import { NavLink, Link } from "react-router-dom";
 import logo from "../images/menu-masters-ogo-transparent.png";
 import "../css files/navbar.css"
 
-function NavBar({ user, setUser }) {
+function NavBar({ user, onLogout }) {
     function handleLogoutClick() {
         fetch("/logout", { method: "DELETE" }).then((resp) => {
             if (resp.ok) {
-                setUser(null);
+                onLogout(null);
             }
         });
     }

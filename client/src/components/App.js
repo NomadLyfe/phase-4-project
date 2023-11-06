@@ -9,7 +9,7 @@ function App() {
     const [user, setUser] = useState(null);
     useEffect(() => {
         fetch('/check_session').then((resp) => {
-            if (resp.ok) {
+            if (resp.status === 200) {
                 resp.json().then((user) => setUser(user));
             }
         });
@@ -17,7 +17,7 @@ function App() {
 
     return (
         <>
-            <NavBar user={user} />
+            <NavBar user={user} onLogout={setUser} />
             <main>
                 <Switch>
                     <Route exact path='/'>
