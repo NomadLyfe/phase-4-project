@@ -41,6 +41,7 @@ class Review(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
     review = db.Column(db.String)
+    stars = db.Column(db.Integer)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'))
@@ -50,9 +51,9 @@ class Review(db.Model, SerializerMixin):
 
     @validates('title', 'review')
     def validate(self, key, value):
-        if key == 'title' and len(value) > 500:
+        if key == 'review' and len(value) > 500:
             raise ValueError('Title is too long.')
-        if key == 'review' and len(value) > 50:
+        if key == 'title' and len(value) > 50:
             raise ValueError('Review is too long.')
         return value
     

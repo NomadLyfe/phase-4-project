@@ -9,7 +9,7 @@ from flask_restful import Resource
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import User, Review
+from models import User, Review, Restaurant
 
 # Views go here!
 
@@ -59,7 +59,16 @@ class Logout(Resource):
             session['user_id'] = None
             return {}, 204
         return {'error': 'You are not logged in'}, 401
+    
+class Restaurants(Resource):
+    def get(self):
+        restaurants = [restaurant.to_dict() for restaurant in Restaurant.query.all()]
+        if restaurants:
+            return make_response(restaurants, 200)
+        return {}, 204
 
+
+api.add_resource(Restaurants, '/restaurants', endpoint='restaurants')
 api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
