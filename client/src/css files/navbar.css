@@ -6,6 +6,7 @@
 nav {
     display: flex;
     align-items: center;
+    justify-content: space-around;
 }
 
 nav .link {
@@ -39,7 +40,6 @@ nav form {
     border-radius: 5px;
     border: 1px solid #093d65;
     color: #093d65;
-    margin: 0px 13.5vw;
 }
 
 nav input {

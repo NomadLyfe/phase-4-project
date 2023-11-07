@@ -7,5 +7,6 @@
   background-position-y: -100px;
   background-size: 100vw;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 

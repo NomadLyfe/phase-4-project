@@ -9,7 +9,14 @@ main, input, button, a, input::placeholder {
     color: #093d65;
 }
 
-.welcome {
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #093d65;
+  -webkit-box-shadow: 0 0 0px 40rem #ffff inset;
+}
+
+.welcome, .results {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -49,4 +56,32 @@ main, input, button, a, input::placeholder {
 
 input:focus {
     outline: none;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.result {
+    background-color: rgb(231, 231, 231);
+    border: 1px solid #093d65;
+    border-radius: 5px;
+    display: flex;
+    margin: 30px;
+}
+
+.resultPic {
+    margin: 50px;
+    margin-right: 0px;
+    width: 400px;
+}
+
+.resultInfo {
+    margin: 50px;
+}
+
+.star {
+    color: #f98e54;
 }

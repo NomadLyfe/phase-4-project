@@ -5,7 +5,7 @@ import * as yup from "yup";
 import logo from "../images/menu-masters-ogo-transparent.png";
 import "../css files/navbar.css"
 
-function NavBar({ user, onLogout }) {
+function NavBar({ user, onLogout, history, onSearch }) {
     function handleLogoutClick() {
         fetch("/logout", { method: "DELETE" }).then((resp) => {
             if (resp.ok) {
@@ -26,9 +26,19 @@ function NavBar({ user, onLogout }) {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch()
-            .then()
-            .then()
+            fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${values.location}&term=${values.restaurant}&categories=restaurant&sort_by=best_match&limit=20`, {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer kBmLOigA37g8LBZPX2Lm60qZA-y7zd_b5cvfN-h4rK9AsO-X5i8PaTcbkmbvYJsq3YOMuwigVXgU8-PQSJipSfU4LP70_j4V8K0BKGAlXcHbs7iM04XZrn7fd3hJZXYx'
+                }
+            })
+            .then(resp => resp.json())
+            .then(restaurants => {
+                history.push('/results')
+                onSearch(restaurants.businesses)
+            })
         }
     });
 
@@ -38,7 +48,7 @@ function NavBar({ user, onLogout }) {
             <form onSubmit={formik.handleSubmit}>
                 <input type='text'name="restaurant" value={formik.values.restaurant} onChange={formik.handleChange} placeholder='Restaurant...' />
                 <input type='text'name="location" value={formik.values.location} onChange={formik.handleChange} placeholder='Location...' />
-                <button>Search</button>
+                <button type="submit">Search</button>
             </form>
             {!user ? <NavLink to="/login" className='link' >Login</NavLink> : null}
             {!user ? <NavLink to='/signup' className='link' >Signup</NavLink> : null}
