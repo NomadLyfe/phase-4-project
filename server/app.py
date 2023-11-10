@@ -31,7 +31,6 @@ class Signup(Resource):
                 return user.to_dict(), 201
             return {'error': 'Invalid information submitted'}, 422
         except:
-            print(request.get_json().get('password'))
             return {'error': 'Invalid user information'}, 422
 
 class CheckSession(Resource):
@@ -67,7 +66,24 @@ class Restaurants(Resource):
             return make_response(restaurants, 200)
         return {}, 204
 
+class Reviews(Resource):
+    def get(self):
+        restaurant = Restaurant.query.filter_by(id = session['restaurant_id']).first()
+        reviews = [review.to_dict() for review in Review.query.filter_by(restaurant_id = restaurant.id).all()]
+        if reviews:
+            return make_response(reviews, 200)
+        return {}, 204
 
+class Rest(Resource):
+    def post(self):
+        restaurant = Restaurant.query.filter_by(name = request.get_json().get('name')).filter_by(address = request.get_json().get('address')).first()
+        session['restaurant_id'] = restaurant.id
+    
+    def delete(self):
+        session['restaurant_id'] = None
+
+api.add_resource(Rest, '/rest', endpoint='rest')
+api.add_resource(Reviews, '/reviews', endpoint='reviews')
 api.add_resource(Restaurants, '/restaurants', endpoint='restaurants')
 api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(Login, '/login', endpoint='login')

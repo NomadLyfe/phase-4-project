@@ -44,9 +44,9 @@ if __name__ == '__main__':
         print("Adding Restaurants...")
         restaurants = [Restaurant(name=company, address=address) for (company, address) in companies]
         print("Adding Reviews...")
-        reviews = [Review(title=fake.emoji() , review=fake.paragraph(nb_sentences=3) , stars=rc([1,2,3,4,5])) for i in range(1000)]
+        reviews = [Review(title=fake.paragraph(nb_sentences=1) , review=fake.paragraph(nb_sentences=5) , stars=rc([1,2,3,4,5])) for i in range(500)]
         print("Adding Users...")
-        users = [User(username=fake.name()) for i in range(50)]
+        users = [User(username=fake.name()) for i in range(20)]
         for user in users:
             user.password_hash = fake.domain_word()
         for review in reviews:

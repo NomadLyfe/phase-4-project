@@ -125,3 +125,8 @@ input:focus {
 .address h4 {
     margin: 0px;
 }
+
+.restuarantReviews:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

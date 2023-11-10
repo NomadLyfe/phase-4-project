@@ -11,8 +11,13 @@ function Results({ results, history }) {
                 resp.json().then(data => setRestaurants(data))
             }
         })
+        fetch('/rest', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(resp => resp.json()).then(() => null)
     }, [])
-
     const renderedResultList = results.map((result, index) => {
         if (restaurants) {
             const matchedRestaurant = restaurants.find((restaurant) => {
@@ -25,15 +30,15 @@ function Results({ results, history }) {
                 reviews = matchedRestaurant.reviews.length
                 averageStars = Math.round((totalStars/reviews * 10))/10
             }
-            console.log(averageStars)
             return (
                 <div className="result" key={result.id}>
                     <img className="resultPic" alt="Restaurant" src={image} />
                     <div className="resultInfo">
-                        <a><h2>{index + 1}. {result.name}</h2></a>
+                        <h2>{index + 1}. <span>{result.name}</span></h2>
                         <h3>{result.display_phone}</h3>
-                        <h3><span className="star">{'\u2605'.repeat(matchedRestaurant ? Math.round(averageStars) : 0)}</span>{'\u2606'.repeat(matchedRestaurant ? 5 - Math.round(averageStars) : 5)} {matchedRestaurant ? averageStars : 0} stars ( {matchedRestaurant ? reviews : 0} Reviews )</h3>
+                        <h3 onClick={onRestaurantClick} className="restuarantReviews"><span className="star">{'\u2605'.repeat(matchedRestaurant ? Math.round(averageStars) : 0)}</span>{'\u2606'.repeat(matchedRestaurant ? 5 - Math.round(averageStars) : 5)} {matchedRestaurant ? averageStars : 0} stars ( {matchedRestaurant ? reviews : 0} Reviews )</h3>
                         <div className="address" >{result.location.display_address.map((row, i) => <h4 key={i}>{row}</h4>)}</div>
+                        <button onClick={onRestaurantClick} className="restuarantReviews">Reviews</button>
                         <button onClick={onNewReviewClick}>Leave a review</button>
                     </div>
                 </div>
@@ -42,6 +47,16 @@ function Results({ results, history }) {
             return null
         }
     })
+
+    function onRestaurantClick(e) {
+        fetch('/rest', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: e.target.parentNode.querySelector('h2 span').textContent, address: e.target.parentNode.querySelectorAll('h4')[0].textContent})
+        }).then(resp => resp.json()).then(() => history.push('/reviews'))
+    }
 
     function onNewReviewClick() {
         history.push('/newreview')

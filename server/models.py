@@ -53,7 +53,7 @@ class Review(db.Model, SerializerMixin):
     def validate(self, key, value):
         if key == 'review' and len(value) > 500:
             raise ValueError('Title is too long.')
-        if key == 'title' and len(value) > 50:
+        if key == 'title' and len(value) > 100:
             raise ValueError('Review is too long.')
         return value
     

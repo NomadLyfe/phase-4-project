@@ -39,7 +39,7 @@ function App() {
                         <Signup onLogin={setUser} user={user} />
                     </Route>
                     <Route exact path='/results'>
-                        <Results results={results} />
+                        <Results results={results} history={history} />
                     </Route>
                     <Route exact path='/newreview'>
                         <NewReview />
