@@ -33,10 +33,16 @@ main {
     height: 15vw;
 }
 
+.welcome p {
+    font-size: large;
+    max-width: 70vw;
+}
+
 .welcome, .results {
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: center;
 }
 
 .form {
@@ -73,12 +79,6 @@ main {
 
 input:focus {
     outline: none;
-}
-
-.results {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
 }
 
 .result {

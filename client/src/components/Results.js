@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import image from '../images/fine_dining_1.jpg';
 
-function Results({ results }) {
+function Results({ results, history }) {
     const [restaurants, setRestaurants] = useState(null)
+
     useEffect(() => {
         fetch('/restaurants')
         .then((resp) => {
@@ -11,6 +12,7 @@ function Results({ results }) {
             }
         })
     }, [])
+
     const renderedResultList = results.map((result, index) => {
         if (restaurants) {
             const matchedRestaurant = restaurants.find((restaurant) => {
@@ -32,7 +34,7 @@ function Results({ results }) {
                         <h3>{result.display_phone}</h3>
                         <h3><span className="star">{'\u2605'.repeat(matchedRestaurant ? Math.round(averageStars) : 0)}</span>{'\u2606'.repeat(matchedRestaurant ? 5 - Math.round(averageStars) : 5)} {matchedRestaurant ? averageStars : 0} stars ( {matchedRestaurant ? reviews : 0} Reviews )</h3>
                         <div className="address" >{result.location.display_address.map((row, i) => <h4 key={i}>{row}</h4>)}</div>
-                        <button>Leave a review</button>
+                        <button onClick={onNewReviewClick}>Leave a review</button>
                     </div>
                 </div>
             )
@@ -40,6 +42,10 @@ function Results({ results }) {
             return null
         }
     })
+
+    function onNewReviewClick() {
+        history.push('/newreview')
+    }
 
     return (
         <div className="results">

@@ -7,6 +7,8 @@ import Signup from "./Signup";
 import Home from "./Home";
 import Results from "./Results";
 import Footer from "./Footer";
+import NewReview from "./NewReview";
+import Reviews from "./Reviews";
 import '../css files/app.css'
 
 function App() {
@@ -36,8 +38,14 @@ function App() {
                     <Route exact path='/signup'>
                         <Signup onLogin={setUser} user={user} />
                     </Route>
-                    <Route>
+                    <Route exact path='/results'>
                         <Results results={results} />
+                    </Route>
+                    <Route exact path='/newreview'>
+                        <NewReview />
+                    </Route>
+                    <Route exact path='/reviews'>
+                        <Reviews />
                     </Route>
                 </Switch>
                 <Footer />
