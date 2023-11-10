@@ -21,6 +21,8 @@ nav .link {
     align-items: center;
     justify-content: center;
     margin: 10px;
+    font-weight: 600;
+    transition-duration: 1s;
 }
 
 nav .link:hover {
@@ -62,6 +64,8 @@ nav button {
     border: 0px;
     background-color: #f98e54;
     color: #093d65;
+    font-weight: 600;
+    transition-duration: 1s;
 }
 
 nav button:hover {

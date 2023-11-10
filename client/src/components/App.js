@@ -6,6 +6,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Home from "./Home";
 import Results from "./Results";
+import Footer from "./Footer";
 import '../css files/app.css'
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
                         <Results results={results} />
                     </Route>
                 </Switch>
+                <Footer />
             </main>
         </>
     );

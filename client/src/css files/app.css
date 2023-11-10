@@ -16,11 +16,27 @@ input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 40rem #ffff inset;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 38vw;
+}
+
+.footer {
+    position: relative;
+    background-color: #f98e54e0;
+    border-radius: 5px;
+    border: 1px solid #093d65;
+    width: 98vw;
+    height: 15vw;
+}
+
 .welcome, .results {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 300px;
 }
 
 .form {
@@ -46,6 +62,7 @@ input:-webkit-autofill:focus {
     border: 1px solid #093d65;
     background-color: #f98e54;
     padding: 5px;
+    transition-duration: 1s;
 }
 
 .form form button:hover {
@@ -65,11 +82,25 @@ input:focus {
 }
 
 .result {
-    background-color: rgb(231, 231, 231);
+    background-color: #f98e54e0;
     border: 1px solid #093d65;
-    border-radius: 5px;
+    border-radius: 15px;
     display: flex;
     margin: 30px;
+}
+
+.result button {
+    border-radius: 5px;
+    border: 1px solid #093d65;
+    background-color: white;
+    padding: 5px;
+    transition-duration: 1s;
+}
+
+.result button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    transition-duration: 1s;
+    cursor: pointer;
 }
 
 .resultPic {
@@ -83,5 +114,14 @@ input:focus {
 }
 
 .star {
-    color: #f98e54;
+    color: yellow;
+}
+
+.address {
+    margin-top: 21.28px;
+    margin-bottom: 21.28px;
+}
+
+.address h4 {
+    margin: 0px;
 }
