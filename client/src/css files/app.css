@@ -106,7 +106,7 @@ input:focus {
 .resultPic {
     margin: 50px;
     margin-right: 0px;
-    width: 400px;
+    height: 400px;
 }
 
 .resultInfo {

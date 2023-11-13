@@ -22,23 +22,24 @@ function NavBar({ user, onLogout, history, onSearch }) {
     const formik = useFormik({
         initialValues: {
             restaurant: "",
-            location: ""
+            location: "",
+            offset: 0
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${values.location}&term=${values.restaurant}&categories=restaurant&sort_by=best_match&limit=20`, {
-                method: 'GET',
+            fetch(`/results`, {
+                method: 'POST',
                 headers: {
                     'accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer kBmLOigA37g8LBZPX2Lm60qZA-y7zd_b5cvfN-h4rK9AsO-X5i8PaTcbkmbvYJsq3YOMuwigVXgU8-PQSJipSfU4LP70_j4V8K0BKGAlXcHbs7iM04XZrn7fd3hJZXYx'
-                }
-            })
-            .then(resp => resp.json())
-            .then(restaurants => {
-                history.push('/results')
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(values, null, 2)
+            }).then(resp => resp.json()).then(restaurants => {
+                history.push(`/results/${values.restaurant}/${values.location}`)
+                console.log(restaurants)
                 onSearch(restaurants.businesses)
             })
+            formik.resetForm();
         }
     });
 

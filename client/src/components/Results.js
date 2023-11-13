@@ -1,8 +1,12 @@
+import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import image from '../images/fine_dining_1.jpg';
+import { useFormik } from "formik";
+import * as yup from "yup";
 
-function Results({ results, history }) {
+function Results({ results, history, onSearch }) {
     const [restaurants, setRestaurants] = useState(null)
+    const [page, setPage] = useState(0)
+    let { queryParam, locationParam } = useParams();
 
     useEffect(() => {
         fetch('/restaurants')
@@ -19,6 +23,7 @@ function Results({ results, history }) {
         }).then(resp => resp.json()).then(() => null)
     }, [])
     const renderedResultList = results.map((result, index) => {
+        console.log('hello')
         if (restaurants) {
             const matchedRestaurant = restaurants.find((restaurant) => {
                 return restaurant.name === result.name && restaurant.address === result.location.display_address[0]
@@ -32,12 +37,15 @@ function Results({ results, history }) {
             }
             return (
                 <div className="result" key={result.id}>
-                    <img className="resultPic" alt="Restaurant" src={image} />
+                    <img className="resultPic" alt="Restaurant" src={result.image_url} />
                     <div className="resultInfo">
-                        <h2>{index + 1}. <span>{result.name}</span></h2>
+                        <h2>{index + 1 + page}. <span>{result.name}</span></h2>
                         <h3>{result.display_phone}</h3>
                         <h3 onClick={onRestaurantClick} className="restuarantReviews"><span className="star">{'\u2605'.repeat(matchedRestaurant ? Math.round(averageStars) : 0)}</span>{'\u2606'.repeat(matchedRestaurant ? 5 - Math.round(averageStars) : 5)} {matchedRestaurant ? averageStars : 0} stars ( {matchedRestaurant ? reviews : 0} Reviews )</h3>
-                        <div className="address" >{result.location.display_address.map((row, i) => <h4 key={i}>{row}</h4>)}</div>
+                        <h4>Categories: {result.categories.map((row) => <span key={row.alias}>{row.title} </span>)}</h4>
+                        <h4>Price: {result.price ? result.price : '$'}</h4>
+                        <div className="address" >{result.location.display_address.map((row) => <h4 key={row}>{row}</h4>)}</div>
+                        <h4>{result.transactions.map((row, i) => <span key={i}>-{row === 'restaurant_reservation' ? 'reservation' : row}  </span>)}</h4>
                         <button onClick={onRestaurantClick} className="restuarantReviews">Reviews</button>
                         <button onClick={onNewReviewClick}>Leave a review</button>
                     </div>
@@ -62,10 +70,45 @@ function Results({ results, history }) {
         history.push('/newreview')
     }
 
+    const formik = useFormik({
+        initialValues: {
+            restaurant: queryParam,
+            location: locationParam,
+            offset: page
+        },
+        validationSchema: null,
+        onSubmit: (values) => {
+            fetch(`/results`, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(values, null, 2)
+            }).then(resp => resp.json()).then(restaurants => {
+                console.log(restaurants, 1)
+                onSearch(restaurants.businesses)
+            })
+        }
+    });
+
+    function onFormik(e) {
+        if (e.target.textContent === 'Next Page') {
+            setPage(page + 20)
+            formik.values.offset = page + 20
+        } else {
+            setPage(page - 20)
+            formik.values.offset = page - 20
+        }
+        formik.handleSubmit()
+    }
+
     return (
         <div className="results">
-            <h1>Here are your results!!</h1>
+            <h1>Here are your results for "{queryParam}" in "{locationParam}":</h1>
             {renderedResultList}
+            {page > 0 ? <button type="submit" onClick={onFormik}>Previous Page</button> : null}
+            {page < 1000 ? <button type="submit" onClick={onFormik}>Next Page</button> : null}
         </div>
     );
 }

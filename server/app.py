@@ -4,7 +4,12 @@
 
 # Remote library imports
 from flask import request, session, make_response, jsonify
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
+import requests
+import pprint
+from urllib.parse import quote
+from urllib.error import HTTPError
+import sys
 
 # Local imports
 from config import app, db, api
@@ -82,6 +87,51 @@ class Rest(Resource):
     def delete(self):
         session['restaurant_id'] = None
 
+class Results(Resource):
+    def post(self):
+        API_KEY = 'kBmLOigA37g8LBZPX2Lm60qZA-y7zd_b5cvfN-h4rK9AsO-X5i8PaTcbkmbvYJsq3YOMuwigVXgU8-PQSJipSfU4LP70_j4V8K0BKGAlXcHbs7iM04XZrn7fd3hJZXYx'
+        API_HOST = 'https://api.yelp.com'
+        SEARCH_PATH = '/v3/businesses/search'
+        BUSINESS_PATH = '/v3/businesses/'
+        SEARCH_LIMIT = 20
+        def requester(host, path, api_key, url_params=None):
+            url_params = url_params or {}
+            url = '{0}{1}'.format(host, quote(path.encode('utf8')))
+            headers = {'Authorization': 'Bearer %s' % api_key,}
+            print(u'Querying {0} ...'.format(url))
+            response = requests.request('GET', url, headers=headers, params=url_params)
+            return response.json()
+        def search(api_key, term, location):
+            url_params = {
+                'term': term.replace(' ', '+'),
+                'location': location.replace(' ', '+'),
+                'limit': SEARCH_LIMIT,
+                'offset': request.get_json().get('offset')
+            }
+            return requester(API_HOST, SEARCH_PATH, api_key, url_params=url_params)
+        def get_business(api_key, business_id):
+            business_path = BUSINESS_PATH + business_id
+            return requester(API_HOST, business_path, api_key)
+        def query_api(term, location):
+            response = search(API_KEY, term, location)
+            businesses = response.get('businesses')
+            if not businesses:
+                print(u'No businesses for {0} in {1} found.'.format(term, location))
+                return
+            """business_id = businesses[0]['id']
+            print(u'{0} businesses found, querying business info for the top result "{1}" ...'.format(len(businesses), business_id))
+            response = get_business(API_KEY, business_id)
+            print(u'Result for business "{0}" found:'.format(business_id))"""
+            return response
+        def main():
+            input_values = request.get_json()
+            try:
+                return query_api(input_values.get('restaurant'), input_values.get('location'))
+            except HTTPError as error:
+                sys.exit('Encountered HTTP error {0} on {1}:\n {2}\nAbort program.'.format(error.code, error.url, error.read(),))
+        return main()
+
+api.add_resource(Results, '/results')
 api.add_resource(Rest, '/rest', endpoint='rest')
 api.add_resource(Reviews, '/reviews', endpoint='reviews')
 api.add_resource(Restaurants, '/restaurants', endpoint='restaurants')

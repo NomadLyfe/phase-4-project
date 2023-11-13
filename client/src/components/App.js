@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
-import { useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory } from "react-router-dom";
 import NavBar from "./NavBar";
 import Login from "./Login";
 import Signup from "./Signup";
@@ -38,8 +37,8 @@ function App() {
                     <Route exact path='/signup'>
                         <Signup onLogin={setUser} user={user} />
                     </Route>
-                    <Route exact path='/results'>
-                        <Results results={results} history={history} />
+                    <Route path={'/results/:queryParam/:locationParam'}>
+                        <Results results={results} history={history} onSearch={setResults} />
                     </Route>
                     <Route exact path='/newreview'>
                         <NewReview />
