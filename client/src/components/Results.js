@@ -21,49 +21,64 @@ function Results({ results, history, onSearch }) {
                 'Content-Type': 'application/json'
             }
         }).then(resp => resp.json()).then(() => null)
+        console.log('hi')
+        fetch(`/results`, {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        }).then(resp => resp.json()).then(restaurants => {
+            console.log(restaurants)
+            onSearch(restaurants.businesses)
+        })
     }, [])
-    const renderedResultList = results.map((result, index) => {
-        console.log('hello')
-        if (restaurants) {
-            const matchedRestaurant = restaurants.find((restaurant) => {
-                return restaurant.name === result.name && restaurant.address === result.location.display_address[0]
-            })
-            let averageStars = null
-            let reviews = null
-            if (matchedRestaurant && matchedRestaurant.reviews) {
-                const totalStars = matchedRestaurant.reviews.reduce((total, review) => total + review.stars, 0)
-                reviews = matchedRestaurant.reviews.length
-                averageStars = Math.round((totalStars/reviews * 10))/10
-            }
-            return (
-                <div className="result" key={result.id}>
-                    <img className="resultPic" alt="Restaurant" src={result.image_url} />
-                    <div className="resultInfo">
-                        <h2>{index + 1 + page}. <span>{result.name}</span></h2>
-                        <h3>{result.display_phone}</h3>
-                        <h3 onClick={onRestaurantClick} className="restuarantReviews"><span className="star">{'\u2605'.repeat(matchedRestaurant ? Math.round(averageStars) : 0)}</span>{'\u2606'.repeat(matchedRestaurant ? 5 - Math.round(averageStars) : 5)} {matchedRestaurant ? averageStars : 0} stars ( {matchedRestaurant ? reviews : 0} Reviews )</h3>
-                        <h4>Categories: {result.categories.map((row) => <span key={row.alias}>{row.title} </span>)}</h4>
-                        <h4>Price: {result.price ? result.price : '$'}</h4>
-                        <div className="address" >{result.location.display_address.map((row) => <h4 key={row}>{row}</h4>)}</div>
-                        <h4>{result.transactions.map((row, i) => <span key={i}>-{row === 'restaurant_reservation' ? 'reservation' : row}  </span>)}</h4>
-                        <button onClick={onRestaurantClick} className="restuarantReviews">Reviews</button>
-                        <button onClick={onNewReviewClick}>Leave a review</button>
+    let renderedResultList = null
+    if (results) {
+        renderedResultList = results.map((result, index) => {
+            if (restaurants) {
+                const matchedRestaurant = restaurants.find((restaurant) => {
+                    return restaurant.name === result.name && restaurant.address === result.location.display_address[0]
+                })
+                let averageStars = null
+                let reviews = null
+                if (matchedRestaurant && matchedRestaurant.reviews) {
+                    const totalStars = matchedRestaurant.reviews.reduce((total, review) => total + review.stars, 0)
+                    reviews = matchedRestaurant.reviews.length
+                    averageStars = Math.round((totalStars/reviews * 10))/10
+                }
+                return (
+                    <div className="result" key={result.id}>
+                        <img className="resultPic" alt="Restaurant" src={result.image_url} />
+                        <div className="resultInfo">
+                            <h2>{index + 1 + page}. <span>{result.name}</span></h2>
+                            <h3 onClick={onRestaurantClick} className="restuarantReviews"><span className="star">{'\u2605'.repeat(matchedRestaurant ? Math.round(averageStars) : 0)}</span>{'\u2606'.repeat(matchedRestaurant ? 5 - Math.round(averageStars) : 5)} {matchedRestaurant ? averageStars : 0} stars ( {matchedRestaurant ? reviews : 0} Reviews )</h3>
+                            <h4>Categories: {result.categories.map((row) => <span key={row.alias}>{row.title} </span>)}</h4>
+                            <h4>Price: {result.price ? result.price : '$'}</h4>
+                            <h4>{result.display_phone}</h4>
+                            <div className="address" >{result.location.display_address.map((row) => <h4 key={row}>{row}</h4>)}</div>
+                            <h4>{result.transactions.map((row, i) => <span key={i}>-{row === 'restaurant_reservation' ? 'reservation' : row}  </span>)}</h4>
+                            <button onClick={onRestaurantClick} className="restuarantReviews">Reviews</button>
+                            <button onClick={onNewReviewClick}>Leave a review</button>
+                        </div>
                     </div>
-                </div>
-            )
-        } else {
-            return null
-        }
-    })
+                )
+            } else {
+                return null
+            }
+        })
+    }
 
     function onRestaurantClick(e) {
+        console.log(e.target.parentNode.querySelectorAll('h4')[0].textContent)
         fetch('/rest', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name: e.target.parentNode.querySelector('h2 span').textContent, address: e.target.parentNode.querySelectorAll('h4')[0].textContent})
-        }).then(resp => resp.json()).then(() => history.push('/reviews'))
+            body: JSON.stringify({name: e.target.parentNode.querySelector('h2 span').textContent, address: e.target.parentNode.querySelectorAll('h4')[3].textContent})
+        }).then(resp => resp.json()).then(() => history.push(`/reviews/${e.target.parentNode.querySelector('h2 span').textContent}`))
     }
 
     function onNewReviewClick() {
@@ -88,16 +103,15 @@ function Results({ results, history, onSearch }) {
             }).then(resp => resp.json()).then(restaurants => {
                 console.log(restaurants, 1)
                 onSearch(restaurants.businesses)
+                setPage(values.offset)
             })
         }
     });
 
     function onFormik(e) {
         if (e.target.textContent === 'Next Page') {
-            setPage(page + 20)
             formik.values.offset = page + 20
         } else {
-            setPage(page - 20)
             formik.values.offset = page - 20
         }
         formik.handleSubmit()

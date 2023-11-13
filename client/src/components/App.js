@@ -43,7 +43,7 @@ function App() {
                     <Route exact path='/newreview'>
                         <NewReview />
                     </Route>
-                    <Route exact path='/reviews'>
+                    <Route exact path='/reviews/:restaurantName'>
                         <Reviews />
                     </Route>
                 </Switch>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Reviews() {
-    const [reviews, setReviews] = useState(null)
+    const [reviews, setReviews] = useState(null);
+    const { restaurantName } = useParams();
 
     useEffect(() => {
         fetch('/reviews').then(resp => resp.json()).then(reviews => setReviews(reviews))
@@ -25,7 +27,7 @@ function Reviews() {
 
     return (
         <div className='results'>
-            <h1>Reviews for {}</h1>
+            <h1>Reviews for {restaurantName}</h1>
             {renderedReviews}
         </div>
     )

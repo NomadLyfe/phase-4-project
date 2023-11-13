@@ -125,7 +125,11 @@ class Results(Resource):
             return response
         def main():
             input_values = request.get_json()
+            if session.get('query') and session.get('location') and not input_values.get('restaurant'):
+                return query_api(session['query'], session['location'])
             try:
+                session['query'] = input_values.get('restaurant')
+                session['location'] = input_values.get('location')
                 return query_api(input_values.get('restaurant'), input_values.get('location'))
             except HTTPError as error:
                 sys.exit('Encountered HTTP error {0} on {1}:\n {2}\nAbort program.'.format(error.code, error.url, error.read(),))
