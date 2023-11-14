@@ -60,8 +60,10 @@ function Results({ results, history, onSearch, user }) {
                             <h4>{result.display_phone ? result.display_phone : '-no phone number available-'}</h4>
                             <div className="address" >{result.location.display_address.map((row) => <h4 key={row}>{row}</h4>)}</div>
                             <h4>{result.transactions.map((row, i) => <span key={i}>-{row === 'restaurant_reservation' ? 'reservation' : row}  </span>)}</h4>
-                            <button onClick={onRestaurantClick} className="restuarantReviews">Reviews</button>
-                            <button onClick={onNewReviewClick}>Leave a review</button>
+                            <div className="resultButtons">
+                                <button onClick={onRestaurantClick} className="resultButton">Reviews</button>
+                                <button onClick={onNewReviewClick} className="resultButton" >Leave a review</button>
+                            </div>
                         </div>
                     </div>
                 )
@@ -77,13 +79,13 @@ function Results({ results, history, onSearch, user }) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name: e.target.parentNode.querySelector('h2 span').textContent, address: e.target.parentNode.querySelector('.address').firstChild.textContent})
-        }).then(resp => resp.json()).then(() => history.push(`/${e.target.parentNode.querySelector('h2 span').textContent}/${e.target.parentNode.querySelector('.address').firstChild.textContent}/reviews`))
+            body: JSON.stringify({name: e.target.parentNode.parentNode.querySelector('h2 span').textContent, address: e.target.parentNode.parentNode.querySelector('.address').firstChild.textContent})
+        }).then(resp => resp.json()).then(() => history.push(`/${e.target.parentNode.parentNode.querySelector('h2 span').textContent}/${e.target.parentNode.parentNode.querySelector('.address').firstChild.textContent}/reviews`))
     }
 
     function onNewReviewClick(e) {
         if (user) {
-            history.push(`/${e.target.parentNode.querySelector('h2 span').textContent}/${e.target.parentNode.querySelector('.address').firstChild.textContent}/newreview`)
+            history.push(`/${e.target.parentNode.parentNode.querySelector('h2 span').textContent}/${e.target.parentNode.parentNode.querySelector('.address').firstChild.textContent}/newreview`)
         } else {
             history.push('/login')
         }
@@ -109,6 +111,7 @@ function Results({ results, history, onSearch, user }) {
                 console.log(restaurants.businesses)
                 onSearch(restaurants.businesses)
                 setPage(values.offset)
+                window.scrollTo({ top: 0, behavior: 'smooth' })
             })
         }
     });
@@ -126,8 +129,10 @@ function Results({ results, history, onSearch, user }) {
         <div className="results">
             <h1>Here are your results for "{queryParam}" in "{locationParam}"</h1>
             {renderedResultList}
-            {page > 0 ? <button type="submit" onClick={onFormik}>Previous Page</button> : null}
-            {page < 1000 ? <button type="submit" onClick={onFormik}>Next Page</button> : null}
+            <div className="pageChangers">
+                {page > 0 ? <button className="pageChanger" type="submit" onClick={onFormik}>Previous Page</button> : null}
+                {document.querySelectorAll('.result').length < 20 ? <button className="pageChanger" type="submit" onClick={onFormik}>Next Page</button> : null}
+            </div>
         </div>
     );
 }

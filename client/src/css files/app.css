@@ -33,9 +33,12 @@ main {
     height: 15vw;
 }
 
-.welcome p {
-    font-size: large;
+.welcome h2 {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f98e54a0;
     max-width: 70vw;
+    margin-bottom: 100px;
 }
 
 .welcome, .results {
@@ -89,20 +92,6 @@ input:focus {
     margin: 30px;
 }
 
-.result button {
-    border-radius: 5px;
-    border: 1px solid #093d65;
-    background-color: white;
-    padding: 5px;
-    transition-duration: 1s;
-}
-
-.result button:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-    transition-duration: 1s;
-    cursor: pointer;
-}
-
 .resultPic {
     margin: 50px;
     margin-right: 0px;
@@ -129,4 +118,50 @@ input:focus {
 .restuarantReviews:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+.pageChangers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100vw;
+    margin-bottom: 30px;
+}
+
+.pageChanger {
+    border-radius: 5px;
+    border: 1px solid #093d65;
+    background-color: #f98e54;
+    padding: 10px;
+    transition-duration: 1s;
+}
+
+.pageChanger:hover {
+    background-color: #f98e5480;
+    transition-duration: 1s;
+    cursor: pointer;
+}
+
+.reviews {
+    margin-bottom: 30px;
+}
+
+.resultButton {
+    border-radius: 5px;
+    border: 1px solid #093d65;
+    background-color: white;
+    padding: 5px;
+    transition-duration: 1s;
+}
+
+.resultButton:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    transition-duration: 1s;
+    cursor: pointer;
+}
+
+.resultButtons {
+    width: auto;
+    display: flex;
+    justify-content: space-between;
 }

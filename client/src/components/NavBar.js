@@ -53,7 +53,7 @@ function NavBar({ user, onLogout, history, onSearch }) {
             {!user ? <NavLink to="/login" className='link' >Login</NavLink> : null}
             {!user ? <NavLink to='/signup' className='link' >Signup</NavLink> : null}
             {user ? <Link to="/" className='link' >Account</Link> : null}
-            {user ? <Link to="/" onClick={handleLogoutClick} className='link' >Log Out</Link> : null}
+            {user ? <button onClick={handleLogoutClick} className='link' >Log Out</button> : null}
         </nav>
   );
 }
