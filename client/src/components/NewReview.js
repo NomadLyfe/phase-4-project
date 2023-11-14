@@ -7,12 +7,16 @@ function NewReview() {
     const { restaurantName } = useParams();
     
     const formSchema = yup.object().shape({
-
+        title: yup.string().required('Must enter title').max(20),
+        stars: yup.number().positive().integer().required('Must enter number of stars').typeError('Please enter an Integer').max(5),
+        review: yup.string().required('Must enter review').max(500)
     })
 
     const formik = useFormik({
         initialValues: {
-
+            title: "",
+            stars: 0,
+            review: ""
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
@@ -22,8 +26,17 @@ function NewReview() {
 
     return (
         <div className='form'>
-            <form>
-                hello
+            <form className='newreview'>
+                <label id='title'>Create a title: </label>
+				<input className='titleInput' type='text' name='title' onChange={formik.handleChange} value={formik.values.title} maxLength={50} placeholder='Maximum of 50 characters...' />
+				<br />
+				<label id='stars'>Enter number of stars (0 through 5): </label>
+				<input className='starsInput' type='number' name='stars' onChange={formik.handleChange} value={formik.values.stars} min={0} max={5} />
+				<br />
+                <label id='review'>Enter your review: </label>
+				<textarea className='reviewInput' name='review' onChange={formik.handleChange} value={formik.values.review} rows={5} maxLength={500} placeholder='Maximum of 500 characters...' />
+                <br />
+				<button type='submit'>Submit</button>
             </form>
         </div>
     )

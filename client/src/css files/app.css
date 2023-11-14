@@ -3,7 +3,7 @@
     src: url('../fonts/dosisregular.ttf');
 }
 
-main, input, button, a, input::placeholder {
+main, input, button, a, input::placeholder, textarea, textarea::placeholder {
     font-family: dosis;
     font-size: medium;
     color: #093d65;
@@ -11,7 +11,10 @@ main, input, button, a, input::placeholder {
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus {
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover, 
+textarea:-webkit-autofill:focus {
   -webkit-text-fill-color: #093d65;
   -webkit-box-shadow: 0 0 0px 40rem #ffff inset;
 }
@@ -80,7 +83,7 @@ main {
     cursor: pointer;
 }
 
-input:focus {
+input:focus, textarea:focus {
     outline: none;
 }
 
@@ -165,4 +168,22 @@ input:focus {
     width: auto;
     display: flex;
     justify-content: space-between;
+}
+
+.titleInput, .reviewInput {
+    width: 50vw;
+}
+
+.newreview {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.newreview .starsInput {
+    width: 30px;
+}
+
+.newreview button {
+    align-self: center;
 }
