@@ -36,7 +36,6 @@ function NavBar({ user, onLogout, history, onSearch }) {
                 body: JSON.stringify(values, null, 2)
             }).then(resp => resp.json()).then(restaurants => {
                 history.push(`/results/${values.restaurant}/${values.location}`)
-                console.log(restaurants)
                 onSearch(restaurants.businesses)
             })
             formik.resetForm();

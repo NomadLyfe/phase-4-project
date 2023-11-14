@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
-function Reviews() {
+function Reviews({ history, user }) {
     const [reviews, setReviews] = useState(null);
-    const { restaurantName } = useParams();
+    const { restaurantName, address } = useParams();
 
     useEffect(() => {
         fetch('/reviews').then(resp => resp.json()).then(reviews => setReviews(reviews))
@@ -25,10 +25,19 @@ function Reviews() {
         })
     }
 
+    function handleClick() {
+        if (user) {
+            history.push(`/${restaurantName}/${address}/newreview`)
+        } else {
+            history.push('/login')
+        }
+    }
+
     return (
         <div className='results'>
             <h1>Reviews for {restaurantName}</h1>
-            {renderedReviews}
+            <button onClick={handleClick}>Leave a review</button>
+            {reviews ? renderedReviews : <h3>No reviews yet, be the first to leave one!</h3>}
         </div>
     )
 }

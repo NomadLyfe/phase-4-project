@@ -82,7 +82,13 @@ class Reviews(Resource):
 class Rest(Resource):
     def post(self):
         restaurant = Restaurant.query.filter_by(name = request.get_json().get('name')).filter_by(address = request.get_json().get('address')).first()
-        session['restaurant_id'] = restaurant.id
+        if restaurant:
+            session['restaurant_id'] = restaurant.id
+        else :
+            new_restuarant = Restaurant(name = request.get_json().get('name') , address = request.get_json().get('address'))
+            db.session.add(new_restuarant)
+            db.session.commit()
+            session['restaurant_id'] = new_restuarant.id
     
     def delete(self):
         session['restaurant_id'] = None

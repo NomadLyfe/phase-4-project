@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import * as yup from "yup";
 
-function Results({ results, history, onSearch }) {
+function Results({ results, history, onSearch, user }) {
     const [restaurants, setRestaurants] = useState(null)
     const [page, setPage] = useState(0)
     let { queryParam, locationParam } = useParams();
@@ -21,7 +20,6 @@ function Results({ results, history, onSearch }) {
                 'Content-Type': 'application/json'
             }
         }).then(resp => resp.json()).then(() => null)
-        console.log('hi')
         fetch(`/results`, {
             method: 'POST',
             headers: {
@@ -30,7 +28,6 @@ function Results({ results, history, onSearch }) {
             },
             body: JSON.stringify({})
         }).then(resp => resp.json()).then(restaurants => {
-            console.log(restaurants)
             onSearch(restaurants.businesses)
         })
     }, [])
@@ -46,7 +43,11 @@ function Results({ results, history, onSearch }) {
                 if (matchedRestaurant && matchedRestaurant.reviews) {
                     const totalStars = matchedRestaurant.reviews.reduce((total, review) => total + review.stars, 0)
                     reviews = matchedRestaurant.reviews.length
-                    averageStars = Math.round((totalStars/reviews * 10))/10
+                    if (reviews) {
+                        averageStars = Math.round((totalStars/reviews * 10))/10
+                    } else {
+                        averageStars = 0
+                    }
                 }
                 return (
                     <div className="result" key={result.id}>
@@ -56,7 +57,7 @@ function Results({ results, history, onSearch }) {
                             <h3 onClick={onRestaurantClick} className="restuarantReviews"><span className="star">{'\u2605'.repeat(matchedRestaurant ? Math.round(averageStars) : 0)}</span>{'\u2606'.repeat(matchedRestaurant ? 5 - Math.round(averageStars) : 5)} {matchedRestaurant ? averageStars : 0} stars ( {matchedRestaurant ? reviews : 0} Reviews )</h3>
                             <h4>Categories: {result.categories.map((row) => <span key={row.alias}>{row.title} </span>)}</h4>
                             <h4>Price: {result.price ? result.price : '$'}</h4>
-                            <h4>{result.display_phone}</h4>
+                            <h4>{result.display_phone ? result.display_phone : '-no phone number available-'}</h4>
                             <div className="address" >{result.location.display_address.map((row) => <h4 key={row}>{row}</h4>)}</div>
                             <h4>{result.transactions.map((row, i) => <span key={i}>-{row === 'restaurant_reservation' ? 'reservation' : row}  </span>)}</h4>
                             <button onClick={onRestaurantClick} className="restuarantReviews">Reviews</button>
@@ -71,18 +72,21 @@ function Results({ results, history, onSearch }) {
     }
 
     function onRestaurantClick(e) {
-        console.log(e.target.parentNode.querySelectorAll('h4')[0].textContent)
         fetch('/rest', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name: e.target.parentNode.querySelector('h2 span').textContent, address: e.target.parentNode.querySelectorAll('h4')[3].textContent})
-        }).then(resp => resp.json()).then(() => history.push(`/reviews/${e.target.parentNode.querySelector('h2 span').textContent}`))
+            body: JSON.stringify({name: e.target.parentNode.querySelector('h2 span').textContent, address: e.target.parentNode.querySelector('.address').firstChild.textContent})
+        }).then(resp => resp.json()).then(() => history.push(`/${e.target.parentNode.querySelector('h2 span').textContent}/${e.target.parentNode.querySelector('.address').firstChild.textContent}/reviews`))
     }
 
-    function onNewReviewClick() {
-        history.push('/newreview')
+    function onNewReviewClick(e) {
+        if (user) {
+            history.push(`/${e.target.parentNode.querySelector('h2 span').textContent}/${e.target.parentNode.querySelector('.address').firstChild.textContent}/newreview`)
+        } else {
+            history.push('/login')
+        }
     }
 
     const formik = useFormik({
@@ -102,6 +106,7 @@ function Results({ results, history, onSearch }) {
                 body: JSON.stringify(values, null, 2)
             }).then(resp => resp.json()).then(restaurants => {
                 console.log(restaurants, 1)
+                console.log(restaurants.businesses)
                 onSearch(restaurants.businesses)
                 setPage(values.offset)
             })
@@ -119,7 +124,7 @@ function Results({ results, history, onSearch }) {
 
     return (
         <div className="results">
-            <h1>Here are your results for "{queryParam}" in "{locationParam}":</h1>
+            <h1>Here are your results for "{queryParam}" in "{locationParam}"</h1>
             {renderedResultList}
             {page > 0 ? <button type="submit" onClick={onFormik}>Previous Page</button> : null}
             {page < 1000 ? <button type="submit" onClick={onFormik}>Next Page</button> : null}

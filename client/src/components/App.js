@@ -32,19 +32,19 @@ function App() {
                         <Home />
                     </Route>
                     <Route exact path='/login'>
-                        <Login onLogin={setUser} user={user} />
+                        <Login onLogin={setUser} user={user} history={history} />
                     </Route>
                     <Route exact path='/signup'>
                         <Signup onLogin={setUser} user={user} />
                     </Route>
                     <Route path={'/results/:queryParam/:locationParam'}>
-                        <Results results={results} history={history} onSearch={setResults} />
+                        <Results results={results} history={history} onSearch={setResults} user={user} />
                     </Route>
-                    <Route exact path='/newreview'>
+                    <Route exact path='/:restaurantName/:address/newreview'>
                         <NewReview />
                     </Route>
-                    <Route exact path='/reviews/:restaurantName'>
-                        <Reviews />
+                    <Route exact path='/:restaurantName/:address/reviews'>
+                        <Reviews history={history} user={user} />
                     </Route>
                 </Switch>
                 <Footer />

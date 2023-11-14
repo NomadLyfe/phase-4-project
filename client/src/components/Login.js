@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function Login({ onLogin, user }) {
+function Login({ onLogin, user, history }) {
     const formSchema = yup.object().shape({
         username: yup.string().required('Must enter username').max(20),
         password: yup.string().required('Must enter password').max(20)
@@ -22,7 +22,10 @@ function Login({ onLogin, user }) {
                 body: JSON.stringify(values, null, 2)
             }).then((resp) => {
                 if (resp.ok) {
-                    resp.json().then((user) => onLogin(user));
+                    resp.json().then((user) => {
+                        onLogin(user)
+                        history.goBack()
+                    });
                 }
             });
         }
