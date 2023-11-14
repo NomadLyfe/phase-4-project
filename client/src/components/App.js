@@ -47,7 +47,7 @@ function App() {
                         <Reviews history={history} user={user} />
                     </Route>
                 </Switch>
-                <Footer />
+                <Footer user={user} />
             </main>
         </>
     );
