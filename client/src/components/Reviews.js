@@ -6,15 +6,18 @@ function Reviews({ history, user }) {
     const [reviews, setReviews] = useState(null);
     const [page, setPage] = useState(0);
     const { restaurantName, address } = useParams();
+    let resultsLength = 0
 
     useEffect(() => {
         fetch('/reviews').then(resp => resp.json()).then(reviews => setReviews(reviews))
+        setPage(0)
     }, [])
     
     let renderedReviews = null
     if (reviews) {
         renderedReviews = reviews.map((review, index) => {
             if (index >= page && index < (page + 20)) {
+                resultsLength += 1
                 return (
                     <div className='result' key={review.id}>
                         <div className='resultInfo'>
@@ -45,12 +48,6 @@ function Reviews({ history, user }) {
         onSubmit: (values) => {
             window.scrollTo({ top: 0, behavior: 'smooth' })
             setPage(values.offset)
-
-            /*fetch('/reviews').then(resp => resp.json()).then(reviews => {
-                setPage(values.offset)
-                setReviews(reviews)
-                window.scrollTo({ top: 0, behavior: 'smooth' })
-            })*/
         }
     });
 
@@ -65,14 +62,14 @@ function Reviews({ history, user }) {
 
     return (
         <div className='results'>
-            <h1>Reviews for {restaurantName}</h1>
+            <h1>Reviews for {restaurantName} on {address}</h1>
             <button className='pageChanger' onClick={handleClick}>Leave a review</button>
             <div className='reviews'>
                 {reviews ? renderedReviews : <h3>No reviews yet, be the first to leave one!</h3>}
             </div>
             <div className='pageChangers'>
                 {page > 0 ? <button className="pageChanger" type="submit" onClick={onFormik}>Previous Page</button> : null}
-                {document.querySelectorAll('.result').length < 20 ? <button className="pageChanger" type="submit" onClick={onFormik}>Next Page</button> : null}
+                {resultsLength === 20 ? <button className="pageChanger" type="submit" onClick={onFormik}>Next Page</button> : null}
             </div>
         </div>
     )

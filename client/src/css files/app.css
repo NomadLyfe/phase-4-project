@@ -143,6 +143,7 @@ input:focus {
 }
 
 .reviews {
+    width: 50vw;
     margin-bottom: 30px;
 }
 

@@ -131,7 +131,7 @@ function Results({ results, history, onSearch, user }) {
             {renderedResultList}
             <div className="pageChangers">
                 {page > 0 ? <button className="pageChanger" type="submit" onClick={onFormik}>Previous Page</button> : null}
-                {document.querySelectorAll('.result').length < 20 ? <button className="pageChanger" type="submit" onClick={onFormik}>Next Page</button> : null}
+                {document.querySelectorAll('.result').length === 20 ? <button className="pageChanger" type="submit" onClick={onFormik}>Next Page</button> : null}
             </div>
         </div>
     );
