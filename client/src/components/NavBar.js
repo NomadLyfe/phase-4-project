@@ -52,7 +52,7 @@ function NavBar({ user, onLogout, history, onSearch }) {
             </form>
             {!user ? <NavLink to="/login" className='link' >Login</NavLink> : null}
             {!user ? <NavLink to='/signup' className='link' >Signup</NavLink> : null}
-            {user ? <Link to="/" className='link' >Account</Link> : null}
+            {user ? <Link to="/account" className='link' >Account</Link> : null}
             {user ? <button onClick={handleLogoutClick} className='link' >Log Out</button> : null}
         </nav>
   );

@@ -8,6 +8,7 @@ import Results from "./Results";
 import Footer from "./Footer";
 import NewReview from "./NewReview";
 import Reviews from "./Reviews";
+import AccountInfo from "./AccountInfo";
 import '../css files/app.css'
 
 function App() {
@@ -45,6 +46,9 @@ function App() {
                     </Route>
                     <Route exact path='/:restaurantName/:address/reviews'>
                         <Reviews history={history} user={user} />
+                    </Route>
+                    <Route exact path='/account'>
+                        <AccountInfo user={user} />
                     </Route>
                 </Switch>
                 <Footer user={user} />
