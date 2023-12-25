@@ -19,12 +19,12 @@ function Footer({ user }) {
                 </div>
                 <div className="footer-more">
                     <div className="footer-links">
-                        <Link className='footer-links'>Home</Link>
-                        {!user ? <Link className='footer-links'>Login</Link> : null}
-                        {!user ? <Link className='footer-links'>Sign up</Link> : null}
-                        {user ? <Link className='footer-links'>Account</Link> : null}
-                        {user ? <Link className='footer-links'>Logout</Link> : null}
-                        <Link className='footer-links'>Contact Us</Link>
+                        <Link to='/' className='footer-links'>Home</Link>
+                        {!user ? <Link to='login' className='footer-links'>Login</Link> : null}
+                        {!user ? <Link to='/signup' className='footer-links'>Sign up</Link> : null}
+                        {user ? <Link to='/account' className='footer-links'>Account</Link> : null}
+                        {user ? <Link to='/logout' className='footer-links'>Logout</Link> : null}
+                        <Link to='/' className='footer-links'>Contact Us</Link>
                     </div>
                     <div className="footer-info">
                         <p>By using this site, you agree to the Terms of Use and Privacy Policy. Menu Masters ® is a registered trademark of the Jerry Foundation, Inc., a non-profit organization.</p>

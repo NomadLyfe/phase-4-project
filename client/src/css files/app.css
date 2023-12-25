@@ -31,8 +31,7 @@ main {
     position: relative;
     background-color: rgba(255, 255, 255, 0.90);
     border-radius: 5px;
-    border: 1px solid #093d65;
-    width: 98vw;
+    width: 99vw;
     height: 11vw;
 }
 
@@ -57,10 +56,15 @@ main {
     align-items: center;
     text-align: center;
     height: 500px;
+    flex-direction: column;
+}
+
+.form a {
+    color: #093d65;
 }
 
 .form form {
-    background-color: white;
+    background-color: #ffffffe0;
     border-radius: 5px;
     border: 1px solid #093d65;
 }
@@ -187,3 +191,146 @@ input:focus, textarea:focus {
 .newreview button {
     align-self: center;
 }
+
+.allInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.picInfo {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    align-items: center;
+}
+
+.textInfo {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-items: start;
+}
+
+.account-wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffffe0;
+    border: 1px;
+    border-radius: 15px;
+    padding: 0px 40px 40px 40px;
+    width: 74%;
+    margin: 40px 0px 40px 0px;
+}
+
+.account-wrapper header {
+    align-self: center;
+}
+
+.allInfo button {
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid #093d65;
+    background-color: #f98e54;
+    color: #093d65;
+    width: 40%;
+    height: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px;
+    font-weight: 600;
+    transition-duration: 1s;
+}
+
+.textInfo button {
+    width: auto;
+}
+
+.textInfo div {
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+}
+
+.textInfo div label {
+    min-width: 17%;
+    margin-right: 20%;
+}
+
+.allInfo button:hover {
+    background-color: #f98e5480;
+    transition-duration: 1s;
+    cursor: pointer;
+  }
+
+  /* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 24px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #f98e54;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #f98e54;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(36px);
+    -ms-transform: translateX(36px);
+    transform: translateX(36px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .editSwitch {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: -50px;
+    height: 50px;
+  }

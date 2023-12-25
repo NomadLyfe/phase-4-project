@@ -9,7 +9,11 @@ function Reviews({ history, user }) {
     let resultsLength = 0
 
     useEffect(() => {
-        fetch('/reviews').then(resp => resp.json()).then(reviews => setReviews(reviews))
+        fetch('/reviews').then(resp => {
+            if (resp.status === 200) {
+                resp.json().then(reviews => {setReviews(reviews)})                
+            }
+    })
         setPage(0)
     }, [])
     

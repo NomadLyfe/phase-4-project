@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -34,13 +35,15 @@ function Login({ onLogin, user, history }) {
     return (
         <div className="form">
             {!user ? <form onSubmit={formik.handleSubmit} className='loginform'>
-				<label id='username'>Username</label>
-				<input type='text' name='username' onChange={formik.handleChange} value={formik.values.username} />
+				<label id='username' for='usernameinp'>Username</label>
+				<input type='text' id='usernameinp' name='username' autoComplete="on" onChange={formik.handleChange} value={formik.values.username} />
 				<br />
-				<label id='password'>Password</label>
-				<input type='password' name='password' onChange={formik.handleChange} value={formik.values.password} />
+				<label id='password' for='passwordinp'>Password</label>
+				<input type='password' id='passwordinp' name='password' onChange={formik.handleChange} value={formik.values.password} />
 				<br />
 				<button type='submit'>Log In</button>
+                <br />
+                <Link to='/signup'>Don't have an account? Click here to make one!</Link>
 			</form> : <p>Congratulations! You are logged in!</p>}
         </div>
     );

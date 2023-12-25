@@ -9,6 +9,7 @@ function NavBar({ user, onLogout, history, onSearch }) {
     function handleLogoutClick() {
         fetch("/logout", { method: "DELETE" }).then((resp) => {
             if (resp.ok) {
+                history.push('/');
                 onLogout(null);
             }
         });
