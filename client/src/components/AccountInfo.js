@@ -16,7 +16,8 @@ function AccountInfo({ user, setUser }) {
         initialValues: {
             username: user ? user.username : "",
             password: "",
-            email: user ? user.email : ""
+            email: user ? user.email : "",
+            pic: user ? user.photo : ""
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
@@ -48,8 +49,7 @@ function AccountInfo({ user, setUser }) {
             <header><h1>Account Information</h1></header>
             <div className="allInfo">
                 <div className="picInfo">
-                    <img src={image} onerror="this.src={image}" alt='profile pic' />
-                    {editOn ? <button>Change Profile Picture</button> : null}
+                    <img src={user.photo} onerror="this.src={image}" alt='profile pic' />
                 </div>
                 <form className="textInfo" onSubmit={formik.handleSubmit}>
                     <div>
@@ -65,6 +65,11 @@ function AccountInfo({ user, setUser }) {
                     <div>
                         <label id="email" for="emailinp">E-mail: </label>
                         {editOn ? <input id="emailinp" name="email" type="text" onChange={formik.handleChange} value={formik.values.email} /> : <span>{user.email ?? ""}</span>}
+                    </div>
+                    <br />
+                    <div>
+                        {editOn ? <label id="pic" for="picinp">Profile Picture: </label> : null}
+                        {editOn ? <input id="picinp" name="pic" type="text" onChange={formik.handleChange} value={formik.values.pic} /> : null}
                     </div>
                     <br />
                     {editOn ? <button type="submit">Save Changes</button> : null}

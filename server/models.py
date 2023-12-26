@@ -17,6 +17,7 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String)
     email = db.Column(db.String, nullable=False, unique=True)
+    photo = db.Column(db.String)
 
     reviews = db.relationship('Review', back_populates='user', cascade='all, delete-orphan')
     restaurants = association_proxy('reviews', 'restaurant', creator=lambda restaurant_obj: Review(restaurant=restaurant_obj))
@@ -35,7 +36,6 @@ class User(db.Model, SerializerMixin):
             regex = re.compile(pattern)
             match = regex.search(value)
             if match == None:
-                print(f'{value} not a proper email')
                 raise ValueError('Not a proper email')
         return value
     

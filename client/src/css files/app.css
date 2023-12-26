@@ -205,6 +205,13 @@ input:focus, textarea:focus {
     align-items: center;
 }
 
+.picInfo img {
+    position: relative;
+    height: 400px;
+    width: 384px;
+    background-image: url(../images/missing-profile.png);
+}
+
 .textInfo {
     display: flex;
     flex-direction: column;
@@ -254,8 +261,8 @@ input:focus, textarea:focus {
 }
 
 .textInfo div label {
-    min-width: 17%;
-    margin-right: 20%;
+    min-width: 25%;
+    margin-right: 25%;
 }
 
 .allInfo button:hover {

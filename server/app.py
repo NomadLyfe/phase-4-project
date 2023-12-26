@@ -57,9 +57,9 @@ class Login(Resource):
     def patch(self):
         username = request.get_json().get('originalusername')
         newusername = request.get_json().get('username')
-        print('here?')
         password = request.get_json().get('password')
         email = request.get_json().get('email')
+        pic = request.get_json().get('pic')
         user = User.query.filter_by(username = username).first()
         if newusername:
             user.username = newusername
@@ -67,6 +67,8 @@ class Login(Resource):
             user.password_hash = password
         if email:
             user.email = email
+        if pic:
+            user.photo = pic
         db.session.add(user)
         db.session.commit()
         session['user_id'] = user.id
