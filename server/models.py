@@ -6,6 +6,8 @@ from sqlalchemy.orm import validates
 from config import db
 from config import bcrypt
 
+import re
+
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
@@ -14,12 +16,28 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String)
+    email = db.Column(db.String, nullable=False, unique=True)
 
     reviews = db.relationship('Review', back_populates='user', cascade='all, delete-orphan')
     restaurants = association_proxy('reviews', 'restaurant', creator=lambda restaurant_obj: Review(restaurant=restaurant_obj))
 
     def __repr__(self):
         return f'User {self.username}, ID {self.id}'
+    
+    @validates('username', 'email')
+    def validate(self, key, value):
+        if key == 'username' and len(value) > 23:
+            raise ValueError('Username is too long.')
+        if key == 'email':
+            if len(value) > 50:
+                raise ValueError('Email is too long.')
+            pattern = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+            regex = re.compile(pattern)
+            match = regex.search(value)
+            if match == None:
+                print(f'{value} not a proper email')
+                raise ValueError('Not a proper email')
+        return value
     
     @hybrid_property
     def password_hash(self):

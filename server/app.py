@@ -21,18 +21,16 @@ from models import User, Review, Restaurant
 class Signup(Resource):
     def post(self):
         try:
-            print('1')
-            user = User(username=request.get_json().get('username'))
-            print('2')
-            user.password_hash=request.get_json().get('password')
-            print('3')
+            username = request.get_json().get('username')
+            email = request.get_json().get('email')
+            user = User(username=username)
+            user.password_hash = request.get_json().get('password')
+            user.email = email
             if user:
                 print(user)
                 db.session.add(user)
                 db.session.commit()
-                print(user.id)
                 session['user_id'] = user.id
-                print(user)
                 return user.to_dict(), 201
             return {'error': 'Invalid information submitted'}, 422
         except:
@@ -56,6 +54,20 @@ class Login(Resource):
             print(session['user_id'])
             return user.to_dict(), 201
         return {'error': 'Invalid username or password'}, 401
+    
+    def patch(self):
+        username = request.get_json()['username']
+        password = request.get_json()['password']
+        email = request.get_json()['email']
+        user = User.query.filter_by(username = username).first()
+        if password:
+            user.password_hash = password
+        if email:
+            user.email = email
+        db.session.add(user)
+        db.session.commit()
+        return user.to_dict(), 200
+
     
 class Logout(Resource):
     def delete(self):
