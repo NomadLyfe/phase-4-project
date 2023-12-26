@@ -51,21 +51,26 @@ class Login(Resource):
         if user and user.authenticate(password):
             session['user_id'] = user.id
             session.modified = True
-            print(session['user_id'])
             return user.to_dict(), 201
         return {'error': 'Invalid username or password'}, 401
     
     def patch(self):
-        username = request.get_json()['username']
-        password = request.get_json()['password']
-        email = request.get_json()['email']
+        username = request.get_json().get('originalusername')
+        newusername = request.get_json().get('username')
+        print('here?')
+        password = request.get_json().get('password')
+        email = request.get_json().get('email')
         user = User.query.filter_by(username = username).first()
+        if newusername:
+            user.username = newusername
         if password:
             user.password_hash = password
         if email:
             user.email = email
         db.session.add(user)
         db.session.commit()
+        session['user_id'] = user.id
+        session.modified = True
         return user.to_dict(), 200
 
     

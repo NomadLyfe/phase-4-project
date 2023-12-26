@@ -48,7 +48,7 @@ function App() {
                         <Reviews history={history} user={user} />
                     </Route>
                     <Route exact path='/account'>
-                        <AccountInfo user={user} history={history} />
+                        <AccountInfo user={user} setUser={setUser} />
                     </Route>
                 </Switch>
                 <Footer user={user} />

@@ -3,12 +3,13 @@ import * as yup from "yup";
 import { useState, useEffect } from "react";
 import image from '../images/missing-profile.png'
 
-function AccountInfo({ user, history }) {
+function AccountInfo({ user, setUser }) {
     const [editOn, setEditOn] = useState(false)
 
     const formSchema = yup.object().shape({
-        username: yup.string().required('Must enter username').max(20),
-        password: yup.string().required('Must enter password').max(20)
+        username: yup.string().max(20),
+        password: yup.string().max(20),
+        email: yup.string().max(50)
     })
 
     const formik = useFormik({
@@ -19,6 +20,8 @@ function AccountInfo({ user, history }) {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
+            values.originalusername = user.username
+            console.log('hi')
             fetch('/login', {
                 method: 'PATCH',
                 headers: {
@@ -28,7 +31,8 @@ function AccountInfo({ user, history }) {
             }).then((resp) => {
                 if (resp.ok) {
                     resp.json().then((user) => {
-                        history.push('/account')
+                        setEditOn(!editOn)
+                        setUser(user)
                     });
                 }
             });
