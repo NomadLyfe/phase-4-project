@@ -3,8 +3,8 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
-function NewReview() {
-    const { restaurantName } = useParams();
+function NewReview({ history }) {
+    const { restaurantName, address } = useParams();
     
     const formSchema = yup.object().shape({
         title: yup.string().required('Must enter title').max(20),
@@ -20,7 +20,18 @@ function NewReview() {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch('')
+            values.restaurant = restaurantName
+            values.address = address
+            fetch('/reviews', {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(values, null, 2)
+            }).then(resp => resp.json()).then(() => {
+                history.push(`/${restaurantName}/${address}/reviews`)
+            })
         }
     })
 

@@ -97,6 +97,17 @@ class Reviews(Resource):
         if reviews:
             return make_response(reviews, 200)
         return {}, 204
+    def post(self):
+        title = request.get_json().get('title')
+        stars = request.get_json().get('stars')
+        user = User.query.filter_by(id = session['user_id']).first()
+        restaurant = request.get_json().get('restaurant')
+        address = request.get_json().get('address')
+        restaurant_obj = Restaurant.query.filter_by(name = restaurant, address = address)
+        review = Review(title=title , stars=stars ,review=request.get_json().get('review'), user=user, restaurant=restaurant_obj)
+        db.session.add(review)
+        db.session.commit()
+        return review.to_dict(), 201
 
 class Rest(Resource):
     def post(self):

@@ -42,7 +42,7 @@ function App() {
                         <Results results={results} history={history} onSearch={setResults} user={user} />
                     </Route>
                     <Route exact path='/:restaurantName/:address/newreview'>
-                        <NewReview />
+                        <NewReview history={history} />
                     </Route>
                     <Route exact path='/:restaurantName/:address/reviews'>
                         <Reviews history={history} user={user} />

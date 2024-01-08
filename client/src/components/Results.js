@@ -11,7 +11,7 @@ function Results({ results, history, onSearch, user }) {
         fetch('/restaurants')
         .then((resp) => {
             if (resp.status === 200) {
-                resp.json().then(data => setRestaurants(data))
+                return resp.json().then(data => setRestaurants(data))
             }
         })
         fetch('/rest', {
