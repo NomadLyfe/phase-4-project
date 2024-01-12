@@ -4,10 +4,17 @@
   --link: #61dafb;
   --text: hsla(0, 0%, 100%, 0.88);
   background-image: url('../images/fine_dining_4.jpg');
-  background-position-y: -100px;
-  background-size: calc(50vw + 100vh);
+  background-size: 100vw;
+  background-position-y: -120px;
   background-repeat: no-repeat;
   background-attachment: fixed;
   overflow-x: hidden;
 }
 
+@media (max-width: 1300px) and (orientation: portrait) {
+  :root {
+    background-position-y: 0px;
+    background-size: auto 100vh;
+    background-position-x: right;
+  }
+}
