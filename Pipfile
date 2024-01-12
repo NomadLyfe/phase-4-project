@@ -17,6 +17,7 @@ faker = "*"
 flask-bcrypt = "*"
 requests = "*"
 gunicorn = "*"
+honcho = "*"
 
 [requires]
 python_full_version = "3.8.13"
