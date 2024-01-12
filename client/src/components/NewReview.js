@@ -10,7 +10,7 @@ function NewReview({ history }) {
         title: yup.string().required('Must enter title').max(20),
         stars: yup.number().positive().integer().required('Must enter number of stars').typeError('Please enter an Integer').max(5),
         review: yup.string().required('Must enter review').max(500)
-    })
+    });
 
     const formik = useFormik({
         initialValues: {
@@ -20,8 +20,8 @@ function NewReview({ history }) {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            values.restaurant = restaurantName
-            values.address = address
+            values.restaurant = restaurantName;
+            values.address = address;
             fetch('/reviews', {
                 method: 'POST',
                 headers: {
@@ -30,10 +30,10 @@ function NewReview({ history }) {
                 },
                 body: JSON.stringify(values, null, 2)
             }).then(resp => resp.json()).then(() => {
-                history.push(`/${restaurantName}/${address}/reviews`)
+                history.push(`/${restaurantName}/${address}/reviews`);
             })
         }
-    })
+    });
 
     return (
         <div className='form'>
@@ -51,6 +51,6 @@ function NewReview({ history }) {
             </form>
         </div>
     )
-}
+};
 
 export default NewReview;

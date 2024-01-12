@@ -6,7 +6,6 @@
 from flask import request, session, make_response
 from flask_restful import Resource
 import requests
-from urllib.parse import quote
 from urllib.error import HTTPError
 import sys
 
@@ -26,7 +25,6 @@ class Signup(Resource):
             user.password_hash = request.get_json().get('password')
             user.email = email
             if user:
-                print(user)
                 db.session.add(user)
                 db.session.commit()
                 session['user_id'] = user.id

@@ -35,6 +35,6 @@ function Footer({ user }) {
             </div>
         </div>
     );
-}
+};
 
 export default Footer;

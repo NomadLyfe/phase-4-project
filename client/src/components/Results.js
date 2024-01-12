@@ -3,17 +3,17 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 
 function Results({ results, history, onSearch, user }) {
-    const [restaurants, setRestaurants] = useState(null)
-    const [page, setPage] = useState(0)
+    const [restaurants, setRestaurants] = useState(null);
+    const [page, setPage] = useState(0);
     let { queryParam, locationParam } = useParams();
 
     useEffect(() => {
         fetch('/restaurants')
         .then((resp) => {
             if (resp.status === 200) {
-                return resp.json().then(data => setRestaurants(data))
-            }
-        })
+                return resp.json().then(data => setRestaurants(data));
+            };
+        });
         fetch('/rest', {
             method: 'DELETE',
             headers: {
@@ -28,9 +28,9 @@ function Results({ results, history, onSearch, user }) {
             },
             body: JSON.stringify({})
         }).then(resp => resp.json()).then(restaurants => {
-            onSearch(restaurants.businesses)
-        })
-    }, [])
+            onSearch(restaurants.businesses);
+        });
+    }, []);
     let renderedResultList = null
     if (results) {
         renderedResultList = results.map((result, index) => {
@@ -115,8 +115,6 @@ function Results({ results, history, onSearch, user }) {
                 },
                 body: JSON.stringify(values, null, 2)
             }).then(resp => resp.json()).then(restaurants => {
-                console.log(restaurants, 1)
-                console.log(restaurants.businesses)
                 onSearch(restaurants.businesses)
                 setPage(values.offset)
                 window.scrollTo({ top: 0, behavior: 'smooth' })

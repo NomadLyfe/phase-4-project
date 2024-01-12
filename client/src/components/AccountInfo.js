@@ -1,7 +1,6 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useState, useEffect } from "react";
-import image from '../images/missing-profile.png'
+import { useState } from "react";
 
 function AccountInfo({ user, setUser }) {
     const [editOn, setEditOn] = useState(false)
@@ -21,8 +20,7 @@ function AccountInfo({ user, setUser }) {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            values.originalusername = user.username
-            console.log('hi')
+            values.originalusername = user.username;
             fetch('/login', {
                 method: 'PATCH',
                 headers: {
@@ -32,19 +30,19 @@ function AccountInfo({ user, setUser }) {
             }).then((resp) => {
                 if (resp.ok) {
                     resp.json().then((user) => {
-                        setEditOn(!editOn)
-                        setUser(user)
-                        const check_box = document.querySelector('.switch').firstChild
-                        check_box.checked = false
+                        setEditOn(!editOn);
+                        setUser(user);
+                        const check_box = document.querySelector('.switch').firstChild;
+                        check_box.checked = false;
                     });
-                }
+                };
             });
         }
-    })
+    });
 
     if (!user) {
         return null
-    }
+    };
 
     return (
         <div className="account-wrapper">
@@ -88,6 +86,6 @@ function AccountInfo({ user, setUser }) {
             </div>
         </div>
     );
-}
+};
 
 export default AccountInfo;

@@ -3,7 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import logo from "../images/menu-masters-ogo-transparent.png";
-import "../css files/navbar.css"
+import "../css files/navbar.css";
 
 function NavBar({ user, onLogout, history, onSearch }) {
     function handleLogoutClick() {
@@ -13,7 +13,7 @@ function NavBar({ user, onLogout, history, onSearch }) {
                 onLogout(null);
             }
         });
-    }
+    };
 
     const formSchema = yup.object().shape({
         restaurant: yup.string(),
@@ -36,8 +36,8 @@ function NavBar({ user, onLogout, history, onSearch }) {
                 },
                 body: JSON.stringify(values, null, 2)
             }).then(resp => resp.json()).then(restaurants => {
-                history.push(`/results/${values.restaurant}/${values.location}`)
-                onSearch(restaurants.businesses)
+                history.push(`/results/${values.restaurant}/${values.location}`);
+                onSearch(restaurants.businesses);
             })
             formik.resetForm();
         }
@@ -57,6 +57,6 @@ function NavBar({ user, onLogout, history, onSearch }) {
             {user ? <button onClick={handleLogoutClick} className='link' >Log Out</button> : null}
         </nav>
   );
-}
+};
 
 export default NavBar

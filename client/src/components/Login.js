@@ -6,7 +6,7 @@ function Login({ onLogin, user, history }) {
     const formSchema = yup.object().shape({
         username: yup.string().required('Must enter username').max(20),
         password: yup.string().required('Must enter password').max(20)
-    })
+    });
 
     const formik = useFormik({
         initialValues: {
@@ -24,13 +24,13 @@ function Login({ onLogin, user, history }) {
             }).then((resp) => {
                 if (resp.ok) {
                     resp.json().then((user) => {
-                        onLogin(user)
-                        history.goBack()
+                        onLogin(user);
+                        history.goBack();
                     });
                 }
             });
         }
-    })
+    });
 
     return (
         <div className="form">
@@ -47,6 +47,6 @@ function Login({ onLogin, user, history }) {
 			</form> : <p>Congratulations! You are logged in!</p>}
         </div>
     );
-}
+};
 
 export default Login;

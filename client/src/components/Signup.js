@@ -31,10 +31,10 @@ function Signup({ onLogin, user }) {
                     }
                 });
             } else {
-                alert('\nYour passwords do not match!')
+                alert('\nYour passwords do not match!');
             }
         }
-    })
+    });
 
     return (
         <div className="form">
@@ -55,6 +55,6 @@ function Signup({ onLogin, user }) {
 			</form> : <p>Congratulations! You are logged in!</p>}
         </div>
     );
-}
+};
 
 export default Signup;

@@ -13,7 +13,7 @@ import '../css files/app.css'
 
 function App() {
     const [user, setUser] = useState(null);
-    const [results, setResults] = useState(null)
+    const [results, setResults] = useState(null);
     const history = useHistory();
 
     useEffect(() => {
@@ -55,6 +55,6 @@ function App() {
             </main>
         </>
     );
-}
+};
 
 export default App;

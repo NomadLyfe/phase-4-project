@@ -6,16 +6,16 @@ function Reviews({ history, user }) {
     const [reviews, setReviews] = useState(null);
     const [page, setPage] = useState(0);
     const { restaurantName, address } = useParams();
-    let resultsLength = 0
+    let resultsLength = 0;
 
     useEffect(() => {
         fetch('/reviews').then(resp => {
             if (resp.status === 200) {
                 resp.json().then(reviews => {setReviews(reviews)})                
             }
-    })
-        setPage(0)
-    }, [])
+        });
+        setPage(0);
+    }, []);
     
     let renderedReviews = null
     if (reviews) {
@@ -31,18 +31,18 @@ function Reviews({ history, user }) {
                             <h4 className='author'> <img src={review.user.photo} /> - {review.user.username}</h4>
                         </div>
                     </div>
-                )
-            }
-        })
-    }
+                );
+            };
+        });
+    };
 
     function handleClick() {
         if (user) {
-            history.push(`/${restaurantName}/${address}/newreview`)
+            history.push(`/${restaurantName}/${address}/newreview`);
         } else {
-            history.push('/login')
-        }
-    }
+            history.push('/login');
+        };
+    };
 
     const formik = useFormik({
         initialValues: {
@@ -50,19 +50,19 @@ function Reviews({ history, user }) {
         },
         validationSchema: null,
         onSubmit: (values) => {
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-            setPage(values.offset)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setPage(values.offset);
         }
     });
 
     function onFormik(e) {
         if (e.target.textContent === 'Next Page') {
-            formik.values.offset = page + 20
+            formik.values.offset = page + 20;
         } else {
-            formik.values.offset = page - 20
-        }
-        formik.handleSubmit()
-    }
+            formik.values.offset = page - 20;
+        };
+        formik.handleSubmit();
+    };
 
     return (
         <div className='results'>
@@ -76,7 +76,7 @@ function Reviews({ history, user }) {
                 {resultsLength === 20 ? <button className="pageChanger" type="submit" onClick={onFormik}>Next Page</button> : null}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Reviews;
