@@ -84,11 +84,19 @@ function Results({ results, history, onSearch, user }) {
     }
 
     function onNewReviewClick(e) {
-        if (user) {
-            history.push(`/${e.target.parentNode.parentNode.querySelector('h2 span').textContent}/${e.target.parentNode.parentNode.querySelector('.address').firstChild.textContent}/newreview`)
-        } else {
-            history.push('/login')
-        }
+        fetch('/rest', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: e.target.parentNode.parentNode.querySelector('h2 span').textContent, address: e.target.parentNode.parentNode.querySelector('.address').firstChild.textContent})
+        }).then(resp => resp.json()).then(() => {
+            if (user) {
+                history.push(`/${e.target.parentNode.parentNode.querySelector('h2 span').textContent}/${e.target.parentNode.parentNode.querySelector('.address').firstChild.textContent}/newreview`)
+            } else {
+                history.push('/login')
+            }
+        })
     }
 
     const formik = useFormik({
