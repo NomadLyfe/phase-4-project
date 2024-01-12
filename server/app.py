@@ -8,13 +8,14 @@ from flask_restful import Resource
 import requests
 from urllib.error import HTTPError
 import sys
+from dotenv import load_dotenv
 
 # Local imports
 from config import app, db, api
 # Add your model imports
 from models import User, Review, Restaurant
 
-# Views go here!
+load_dotenv()
 
 class Signup(Resource):
     def post(self):
