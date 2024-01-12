@@ -35,10 +35,16 @@ main {
     height: 11vw;
 }
 
+.welcome h1 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 40pt;
+}
+
 .welcome h2 {
     border-radius: 10px;
     padding: 20px;
-    background-color: #f98e54a0;
+    background-color: #f98e54c0;
     max-width: 70vw;
     margin-bottom: 100px;
 }
