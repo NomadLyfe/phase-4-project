@@ -20,6 +20,7 @@ gunicorn = "*"
 honcho = "*"
 python-dotenv = "0.21.1"
 psycopg2-binary = "*"
+alembic = "==1.12.1"
 
 [requires]
 python_full_version = "3.8.13"
