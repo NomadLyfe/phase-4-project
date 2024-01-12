@@ -21,7 +21,7 @@ greenlet==3.0.3
 gunicorn==21.2.0
 honcho==1.1.0
 idna==3.6
-importlib-metadata==7.0.1
+importlib-metadata==6.7.0
 importlib-resources==6.1.1
 ipdb==0.13.13
 ipython==8.12.3
