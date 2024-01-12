@@ -37,7 +37,7 @@ function NewReview({ history }) {
 
     return (
         <div className='form'>
-            <form className='newreview'>
+            <form onSubmit={formik.handleSubmit} className='newreview'>
                 <label id='title'>Create a title: </label>
 				<input className='titleInput' type='text' name='title' onChange={formik.handleChange} value={formik.values.title} maxLength={50} placeholder='Maximum of 50 characters...' />
 				<br />

@@ -28,7 +28,7 @@ function Reviews({ history, user }) {
                             <h2>{review.title}</h2>
                             <h3><span className="star">{'\u2605'.repeat(review.stars)}</span>{'\u2606'.repeat(5 - review.stars)} {review.stars} stars</h3>
                             <h3>{review.review}</h3>
-                            <h4> - {review.user.username}</h4>
+                            <h4 className='author'> <img src={review.user.photo} /> - {review.user.username}</h4>
                         </div>
                     </div>
                 )

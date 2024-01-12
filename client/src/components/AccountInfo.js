@@ -34,6 +34,8 @@ function AccountInfo({ user, setUser }) {
                     resp.json().then((user) => {
                         setEditOn(!editOn)
                         setUser(user)
+                        const check_box = document.querySelector('.switch').firstChild
+                        check_box.checked = false
                     });
                 }
             });
@@ -49,7 +51,7 @@ function AccountInfo({ user, setUser }) {
             <header><h1>Account Information</h1></header>
             <div className="allInfo">
                 <div className="picInfo">
-                    <img src={user.photo} onerror="this.src={image}" alt='profile pic' />
+                    <img src={user.photo} />
                 </div>
                 <form className="textInfo" onSubmit={formik.handleSubmit}>
                     <div>

@@ -93,7 +93,7 @@ class Restaurants(Resource):
 class Reviews(Resource):
     def get(self):
         restaurant = Restaurant.query.filter_by(id = session['restaurant_id']).first()
-        reviews = [review.to_dict() for review in Review.query.filter_by(restaurant_id = restaurant.id).all()]
+        reviews = [review.to_dict() for review in Review.query.filter_by(restaurant_id = restaurant.id).order_by(Review.id.desc()).all()]
         if reviews:
             return make_response(reviews, 200)
         return {}, 204
@@ -103,11 +103,12 @@ class Reviews(Resource):
         user = User.query.filter_by(id = session['user_id']).first()
         restaurant = request.get_json().get('restaurant')
         address = request.get_json().get('address')
-        restaurant_obj = Restaurant.query.filter_by(name = restaurant, address = address)
-        review = Review(title=title , stars=stars ,review=request.get_json().get('review'), user=user, restaurant=restaurant_obj)
-        db.session.add(review)
+        review = request.get_json().get('review')
+        restaurant_obj = Restaurant.query.filter_by(name = restaurant, address = address).first()
+        review_obj = Review(title=title, stars=stars, review=review, user=user, restaurant=restaurant_obj)
+        db.session.add(review_obj)
         db.session.commit()
-        return review.to_dict(), 201
+        return review_obj.to_dict(), 201
 
 class Rest(Resource):
     def post(self):

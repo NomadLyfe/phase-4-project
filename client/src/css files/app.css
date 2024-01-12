@@ -336,8 +336,19 @@ input:focus, textarea:focus {
 
   .editSwitch {
     display: flex;
-    flex-direction: row;
     align-items: center;
     margin-top: -50px;
     height: 50px;
+  }
+
+  .author img {
+    max-width: 35px;
+    max-height: 35px;
+    margin-right: 5px;
+    background-image: url(../images/missing-profile.png);
+  }
+
+  .author {
+    display: flex;
+    align-items: center;
   }
