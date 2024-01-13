@@ -18,7 +18,7 @@ flask-bcrypt = "*"
 requests = "*"
 gunicorn = "*"
 honcho = "*"
-python-dotenv = "*"
+python-dotenv = "0.21.1"
 
 [requires]
 python_full_version = "3.8.13"
