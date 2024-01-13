@@ -29,7 +29,8 @@ function Signup({ onLogin, user, history }) {
                     if (resp.ok) {
                         resp.json().then((user) => {
                             onLogin(user);
-                            setTimeout(() => {history.goBack()}, 4000);
+                            const myTimeout = setTimeout(() => {history.push('/')}, 4000);
+                            clearTimeout(myTimeout)
                         });
                     }
                 });
