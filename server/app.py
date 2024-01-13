@@ -8,14 +8,11 @@ from flask_restful import Resource
 import requests
 from urllib.error import HTTPError
 import sys
-from dotenv import load_dotenv
 
 # Local imports
 from config import app, db, api
 # Add your model imports
 from models import User, Review, Restaurant
-
-load_dotenv()
 
 @app.route('/')
 @app.route('/<int:id>')
