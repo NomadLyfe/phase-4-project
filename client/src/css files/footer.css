@@ -1,11 +1,12 @@
 .footer-content {
+    
     height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.footer-logo, .footer-more, .footer-info {
+.footer-more, .footer-info {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,21 +14,32 @@
 }
 
 .footer-info p {
+    max-width: 85vw;
+    text-align: center;
     margin: 3px;
 }
 
 .footer-more {
-    width: 85vw;
+    max-width: 90vw;
 }
 
-.footer-logo img {
-    height: 5vw;
+.footer-more img {
+    margin-top: 15px;
+    width: 15vw;
+    min-width: 150px;
+    max-width: 200px;
 }
 
 .footer-links {
     display: flex;
     flex-direction: row;
-    margin-left: 80px;
-    margin-right: 80px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.footer-links a{
+    width: auto;
+
 }

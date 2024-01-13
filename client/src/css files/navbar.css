@@ -1,12 +1,16 @@
-.navLogo {
-    height: 10vw;
-    margin: 10px;
-}
-
 nav {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+nav .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 20%;
+    min-width: 350px;
 }
 
 nav .link {
@@ -15,8 +19,9 @@ nav .link {
     border: 1px solid #093d65;
     background-color: #f98e54;
     color: #093d65;
-    width: 80px;
-    height: 50px;
+    width: 67px;
+    min-width: 67px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,12 +34,12 @@ nav .link:hover {
     background-color: #f98e5480;
     transition-duration: 1s;
     cursor: pointer;
-  }
+}
 
 nav img {
-    width: 180px;
+    width: 10vw;
+    min-width: 150px;
     margin: 10px;
-    margin-left: 26px;
     margin-top: 24px;
 }
 
@@ -42,10 +47,11 @@ nav form {
     border-radius: 5px;
     border: 1px solid #093d65;
     color: #093d65;
+    margin: 15px 0px;
 }
 
 nav input {
-    width: 20vw;
+    width: 25vw;
     height: 50px;
     border-radius: 4px;
     border: 0px;

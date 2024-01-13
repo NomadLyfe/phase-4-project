@@ -48,6 +48,15 @@ function AccountInfo({ user, setUser }) {
         <div className="account-wrapper">
             <header><h1>Account Information</h1></header>
             <div className="allInfo">
+                <div className="editSwitch">
+                    <p>Edit:</p>
+                    <label class="switch">
+                        <input type="checkbox" onClick={() => {
+                            setEditOn(!editOn)
+                            }} />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
                 <div className="picInfo">
                     <img src={user.photo} />
                 </div>
@@ -74,15 +83,6 @@ function AccountInfo({ user, setUser }) {
                     <br />
                     {editOn ? <button type="submit">Save Changes</button> : null}
                 </form>
-                <div className="editSwitch">
-                    <p>Edit:</p>
-                    <label class="switch">
-                        <input type="checkbox" onClick={() => {
-                            setEditOn(!editOn)
-                            }} />
-                        <span class="slider round"></span>
-                    </label>
-                </div>
             </div>
         </div>
     );

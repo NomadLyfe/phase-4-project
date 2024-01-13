@@ -51,10 +51,12 @@ function NavBar({ user, onLogout, history, onSearch }) {
                 <input type='text'name="location" value={formik.values.location} onChange={formik.handleChange} placeholder='Location...' />
                 <button type="submit">Search</button>
             </form>
-            {!user ? <NavLink to="/login" className='link' >Login</NavLink> : null}
-            {!user ? <NavLink to='/signup' className='link' >Signup</NavLink> : null}
-            {user ? <Link to="/account" className='link' >Account</Link> : null}
-            {user ? <button onClick={handleLogoutClick} className='link' >Log Out</button> : null}
+            <div className="buttons">
+                {!user ? <NavLink to="/login" className='link' >Login</NavLink> : null}
+                {!user ? <NavLink to='/signup' className='link' >Signup</NavLink> : null}
+                {user ? <Link to="/account" className='link' >Account</Link> : null}
+                {user ? <button onClick={handleLogoutClick} className='link' >Log Out</button> : null}
+            </div>
         </nav>
   );
 };

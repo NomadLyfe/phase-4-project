@@ -28,17 +28,20 @@ main {
 }
 
 .footer {
-    position: relative;
-    background-color: rgba(255, 255, 255, 0.90);
+    background-color: rgba(255, 255, 255);
     border-radius: 5px;
-    width: 99vw;
-    height: 11vw;
+    width: 100vw;
+    bottom: -50px;
+    position: relative;
 }
 
-.welcome h1 {
+.welcome h1, .results h1 {
     margin-top: 50px;
     margin-bottom: 50px;
-    font-size: 40pt;
+    text-align: center;
+    font-size: calc(32px + 1vw);
+    text-wrap: wrap;
+    width: 90vw;
 }
 
 .welcome h2 {
@@ -47,6 +50,7 @@ main {
     background-color: #f98e54c0;
     max-width: 70vw;
     margin-bottom: 100px;
+    font-size: calc(20px + 0.25vw);
 }
 
 .welcome, .results {
@@ -103,16 +107,24 @@ input:focus, textarea:focus {
     border-radius: 15px;
     display: flex;
     margin: 30px;
+    flex-wrap: wrap;
+    max-width: 80vw;
+    justify-content: space-around;
+    align-items: center;
+    padding: 25px;
+    min-width: 40vw;
 }
 
 .resultPic {
-    margin: 50px;
-    margin-right: 0px;
-    height: 400px;
+    width: 54vw;
+    max-width: 500px;
+    height: auto;
 }
 
 .resultInfo {
-    margin: 50px;
+    margin: 25px 0px 0px 25px;
+    position: relative;
+    top: -25px;
 }
 
 .star {
@@ -158,6 +170,21 @@ input:focus, textarea:focus {
 .reviews {
     width: 50vw;
     margin-bottom: 30px;
+    min-width: 350px;
+}
+
+.reviews .result{
+    justify-content: left;
+    margin-top: 30px;
+    min-width: 0px;
+}
+
+.reviews .result .resultInfo h3 {
+    text-align: left;
+}
+
+.reviews h3 {
+    text-align: center;
 }
 
 .resultButton {
@@ -201,7 +228,7 @@ input:focus, textarea:focus {
 .allInfo {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .picInfo {
@@ -209,20 +236,25 @@ input:focus, textarea:focus {
     flex-direction: column;
     width: 40%;
     align-items: center;
+    height: 400px;
+    width: 384px;
+    margin: 10px;
 }
 
 .picInfo img {
-    position: relative;
     height: 400px;
     width: 384px;
     background-image: url(../images/missing-profile.png);
+    max-width: 70vw;
 }
 
 .textInfo {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 50vw;
+    max-width: 500px;
     align-items: start;
+    margin: 10px;
 }
 
 .account-wrapper {
@@ -232,7 +264,7 @@ input:focus, textarea:focus {
     border: 1px;
     border-radius: 15px;
     padding: 0px 40px 40px 40px;
-    width: 74%;
+    max-width: 70vw;
     margin: 40px 0px 40px 0px;
 }
 
@@ -267,7 +299,7 @@ input:focus, textarea:focus {
 }
 
 .textInfo div label {
-    min-width: 25%;
+    min-width: 50px;
     margin-right: 25%;
 }
 
@@ -343,8 +375,8 @@ input:focus, textarea:focus {
   .editSwitch {
     display: flex;
     align-items: center;
-    margin-top: -50px;
     height: 50px;
+    margin: 10px;
   }
 
   .author img {

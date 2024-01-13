@@ -40,7 +40,7 @@ if __name__ == '__main__':
         Review.query.delete()
         Restaurant.query.delete()
         User.query.delete()
-        # db.session.commit()
+        db.session.commit()
         # print("Adding Restaurants...")
         # restaurants = [Restaurant(name=company, address=address) for (company, address) in companies]
         # print("Adding Reviews...")

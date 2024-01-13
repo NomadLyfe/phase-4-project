@@ -14,23 +14,21 @@ function Footer({ user }) {
     return (
         <div className="footer">
             <div className="footer-content">
-                <div className="footer-logo">
-                    <NavLink to='/' className='logoLink' ><img src={logo} alt='logo' /></NavLink>
-                </div>
                 <div className="footer-more">
                     <div className="footer-links">
-                        <Link to='/' className='footer-links'>Home</Link>
-                        {!user ? <Link to='login' className='footer-links'>Login</Link> : null}
-                        {!user ? <Link to='/signup' className='footer-links'>Sign up</Link> : null}
-                        {user ? <Link to='/account' className='footer-links'>Account</Link> : null}
-                        {user ? <Link to='/logout' className='footer-links'>Logout</Link> : null}
-                        <Link to='/' className='footer-links'>Contact Us</Link>
+                        <Link to='/'>Home</Link>
+                        {!user ? <Link to='login'>Login</Link> : null}
+                        {!user ? <Link to='/signup'>Sign up</Link> : null}
+                        {user ? <Link to='/account'>Account</Link> : null}
+                        {user ? <Link to='/logout'>Logout</Link> : null}
+                        <Link to='/'>Contact Us</Link>
                     </div>
                     <div className="footer-info">
                         <p>By using this site, you agree to the Terms of Use and Privacy Policy. Menu Masters ® is a registered trademark of the Jerry Foundation, Inc., a non-profit organization.</p>
                         <p>This page was last edited on {datetime} (EST).</p>
                         <p>© 2023 Menu Masters. All rights reserved.</p>
                     </div>
+                    <NavLink to='/' className='logoLink' ><img src={logo} alt='logo' /></NavLink>
                 </div>
             </div>
         </div>
