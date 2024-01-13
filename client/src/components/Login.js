@@ -27,8 +27,11 @@ function Login({ onLogin, user, history }) {
                         onLogin(user);
                         history.goBack();
                     });
+                } else {
+                    alert("You've entered the wrong username or password.\n\nPlease try again.")
                 }
             });
+            formik.resetForm();
         }
     });
 

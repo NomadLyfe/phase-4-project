@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function Signup({ onLogin, user }) {
+function Signup({ onLogin, user, history }) {
     const formSchema = yup.object().shape({
         username: yup.string().required('Must enter username').max(20),
         password: yup.string().required('Must enter password').max(20),
@@ -27,12 +27,16 @@ function Signup({ onLogin, user }) {
                     body: JSON.stringify(values, null, 2)
                 }).then((resp) => {
                     if (resp.ok) {
-                        resp.json().then((user) => onLogin(user));
+                        resp.json().then((user) => {
+                            onLogin(user);
+                            setTimeout(() => {history.goBack()}, 4000);
+                        });
                     }
                 });
             } else {
                 alert('\nYour passwords do not match!');
             }
+            formik.resetForm();
         }
     });
 

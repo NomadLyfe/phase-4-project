@@ -36,7 +36,7 @@ function App() {
                         <Login onLogin={setUser} user={user} history={history} />
                     </Route>
                     <Route exact path='/signup'>
-                        <Signup onLogin={setUser} user={user} />
+                        <Signup onLogin={setUser} user={user} history={history} />
                     </Route>
                     <Route path={'/results/:queryParam/:locationParam'}>
                         <Results results={results} history={history} onSearch={setResults} user={user} />
