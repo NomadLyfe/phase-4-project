@@ -41,18 +41,18 @@ if __name__ == '__main__':
         Restaurant.query.delete()
         Review.query.delete()
         db.session.commit()
-        # print("Adding Restaurants...")
-        # restaurants = [Restaurant(name=company, address=address) for (company, address) in companies]
-        # print("Adding Reviews...")
-        # reviews = [Review(title=fake.paragraph(nb_sentences=1) , review=fake.paragraph(nb_sentences=5) , stars=rc([1,2,3,4,5])) for i in range(500)]
-        # print("Adding Users...")
-        # users = [User(username=fake.user_name()) for i in range(20)]
-        # for user in users:
-        #     user.password_hash = fake.domain_word()
-        #     user.email = fake.free_email()
-        # for review in reviews:
-        #     review.restaurant = rc(restaurants)
-        #     review.user = rc(users)
-        # db.session.add_all(restaurants + users + reviews)
-        # db.session.commit()
+        print("Adding Restaurants...")
+        restaurants = [Restaurant(name=company, address=address) for (company, address) in companies]
+        print("Adding Reviews...")
+        reviews = [Review(title=fake.paragraph(nb_sentences=1) , review=fake.paragraph(nb_sentences=5) , stars=rc([1,2,3,4,5])) for i in range(500)]
+        print("Adding Users...")
+        users = [User(username=fake.user_name()) for i in range(20)]
+        for user in users:
+            user.password_hash = fake.domain_word()
+            user.email = fake.free_email()
+        for review in reviews:
+            review.restaurant = rc(restaurants)
+            review.user = rc(users)
+        db.session.add_all(restaurants + users + reviews)
+        db.session.commit()
         print('Complete.')
