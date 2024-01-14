@@ -7,7 +7,7 @@ function Signup({ onLogin, user, history }) {
         username: yup.string().required('Must enter username').max(20),
         password: yup.string().required('Must enter password').max(20),
         passwordConfirmation: yup.string('Must enter matching password').max(20),
-        email: yup.string('Must enter email').max(50)
+        email: yup.string().email('Must enter email').max(50)
     });
 
     const formik = useFormik({
@@ -58,7 +58,7 @@ function Signup({ onLogin, user, history }) {
 				<input id='emailinp' type='text' name='email' onChange={formik.handleChange} value={formik.values.email} />
                 <br />
 				<button type='submit'>Sign Up</button>
-			</form> : <img src={logo} />}
+			</form> : <img className="loading-logo" src={logo} />}
         </div>
     );
 };
