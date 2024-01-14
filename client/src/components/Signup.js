@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
+import logo from '../images/menu-masters-ogo-transparent.png';
 
 function Signup({ onLogin, user, history }) {
     const formSchema = yup.object().shape({
@@ -29,8 +30,8 @@ function Signup({ onLogin, user, history }) {
                     if (resp.ok) {
                         resp.json().then((user) => {
                             onLogin(user);
-                            const myTimeout = setTimeout(() => {history.push('/')}, 4000);
-                            clearTimeout(myTimeout)
+                            history.goback();
+                            alert('Congratulations! You are logged in!')
                         });
                     }
                 });
@@ -57,7 +58,7 @@ function Signup({ onLogin, user, history }) {
 				<input id='emailinp' type='text' name='email' onChange={formik.handleChange} value={formik.values.email} />
                 <br />
 				<button type='submit'>Sign Up</button>
-			</form> : <p>Congratulations! You are logged in!</p>}
+			</form> : <img src={logo} />}
         </div>
     );
 };
