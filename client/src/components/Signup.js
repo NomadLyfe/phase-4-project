@@ -29,9 +29,9 @@ function Signup({ onLogin, user, history }) {
                 }).then((resp) => {
                     if (resp.ok) {
                         resp.json().then((user) => {
-                            onLogin(user);
                             history.goback();
-                            alert('Congratulations! You are logged in!')
+                            alert('Congratulations! You are logged in!');
+                            onLogin(user);
                         });
                     }
                 });
