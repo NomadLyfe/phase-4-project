@@ -10,7 +10,7 @@ On your local copy, type "pip install -r requirements.txt" to make sure you have
 
 ## Usage
 
-Menu Masters allows a user to create an account and easily search for restaurants in the US and look at their reviews and ratings. The website also allows users to make their own reviews about restaurants that will add tot he average rating of the restaurant. A user will only be allowed to make a review if they have an account and are logged in. In addition to writing your own review, a logged in user can also customize or edit their own account information including: profile picture, username, password, and email. The website is currently deployed at the following link: ![Menu Masters](https://menu-masters-app.onrender.com/).
+Menu Masters allows a user to create an account and easily search for restaurants in the US and look at their reviews and ratings. The website also allows users to make their own reviews about restaurants that will add tot he average rating of the restaurant. A user will only be allowed to make a review if they have an account and are logged in. In addition to writing your own review, a logged in user can also customize or edit their own account information including: profile picture, username, password, and email. The website is currently deployed at the following link: [Menu Masters](https://menu-masters-app.onrender.com/).
 
 ## Sample GIF of Application
 
