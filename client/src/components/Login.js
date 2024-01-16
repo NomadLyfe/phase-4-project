@@ -28,11 +28,7 @@ function Login({ onLogin, user, history }) {
                     resp.json().then((user) => {
                         history.goBack();
                         alert('Congratulations! You are logged in!');
-                        onLogin(() => {
-                            console.log(location.pathname);
-                            return user
-                        });
-                        console.log(location.pathname);
+                        onLogin(user);
                     });
                 } else {
                     alert("You've entered the wrong username or password.\n\nPlease try again.")

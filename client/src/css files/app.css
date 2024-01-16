@@ -392,7 +392,8 @@ input:focus, textarea:focus {
   }
 
   .loading-logo {
-    width: 50vw;
+    width: 30vw;
+    margin: 100px;
   }
 
   @media (max-width: 700px) {

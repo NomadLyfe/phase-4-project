@@ -29,14 +29,16 @@ function Signup({ onLogin, user, history }) {
                 }).then((resp) => {
                     if (resp.ok) {
                         resp.json().then((user) => {
-                            history.goback();
+                            history.goBack();
                             alert('Congratulations! You are logged in!');
                             onLogin(user);
                         });
+                    } else {
+                        alert('\nThat username already exists.\n\nPlease try a different username.');
                     }
                 });
             } else {
-                alert('\nYour passwords do not match!');
+                alert('\nYour passwords do not match.\n\nPlease try again.');
             }
             formik.resetForm();
         }
