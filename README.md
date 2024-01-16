@@ -14,7 +14,7 @@ Menu Masters allows a user to create an account and easily search for restaurant
 
 ## Sample GIF of Application
 
-![Menu Masters GIF]()
+![Menu Masters GIF](/video3583018274-ezgif.com-video-to-gif-converter.gif)
 
 ## Contributing
 
