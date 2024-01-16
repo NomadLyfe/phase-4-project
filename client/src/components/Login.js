@@ -1,10 +1,15 @@
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import logo from '../images/menu-masters-ogo-transparent.png';
 
-function Login({ onLogin, user, history }) {
-    const location = useLocation()
+function Login({ onLogin, user, history, prevPath, setPrevPath, setCurrPath, currPath }) {
+    useEffect(() => {
+        setPrevPath(currPath);
+        setCurrPath(history.location.pathname);
+    }, [])
+
     const formSchema = yup.object().shape({
         username: yup.string().required('Must enter username').max(20),
         password: yup.string().required('Must enter password').max(20)
@@ -26,7 +31,11 @@ function Login({ onLogin, user, history }) {
             }).then((resp) => {
                 if (resp.ok) {
                     resp.json().then((user) => {
-                        history.goBack();
+                        if (prevPath === '/signup') {
+                            history.go(-2);
+                        } else {
+                            history.goBack();
+                        }
                         alert('Congratulations! You are logged in!');
                         onLogin(user);
                     });

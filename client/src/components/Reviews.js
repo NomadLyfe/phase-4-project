@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { useFormik } from "formik";
 
-function Reviews({ history, user }) {
+function Reviews({ history, user, prevPath, setPrevPath, setCurrPath, currPath }) {
     const [reviews, setReviews] = useState(null);
     const [page, setPage] = useState(0);
     const { restaurantName, address } = useParams();
     let resultsLength = 0;
 
     useEffect(() => {
+        setPrevPath(currPath);
+        setCurrPath(history.location.pathname);
         fetch('/reviews').then(resp => {
             if (resp.status === 200) {
                 resp.json().then(reviews => {setReviews(reviews)})                

@@ -1,8 +1,14 @@
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import logo from '../images/menu-masters-ogo-transparent.png';
 
-function Signup({ onLogin, user, history }) {
+function Signup({ onLogin, user, history, prevPath, setPrevPath, setCurrPath, currPath }) {
+    useEffect(() => {
+        setPrevPath(currPath);
+        setCurrPath(history.location.pathname);
+    }, [])
+    
     const formSchema = yup.object().shape({
         username: yup.string().required('Must enter username').max(20),
         password: yup.string().required('Must enter password').max(20),
@@ -29,7 +35,11 @@ function Signup({ onLogin, user, history }) {
                 }).then((resp) => {
                     if (resp.ok) {
                         resp.json().then((user) => {
-                            history.goBack();
+                            if (prevPath === '/login') {
+                                history.go(-2);
+                            } else {
+                                history.goBack();
+                            }
                             alert('Congratulations! You are logged in!');
                             onLogin(user);
                         });

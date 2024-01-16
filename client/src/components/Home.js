@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-function Home() {
+function Home({ history, prevPath, setPrevPath, setCurrPath, currPath }) {
+    useEffect(() => {
+        setPrevPath(currPath);
+        setCurrPath(history.location.pathname);
+    }, [])
 
     return (
         <div className="welcome">

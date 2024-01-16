@@ -2,12 +2,14 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 
-function Results({ results, history, onSearch, user }) {
+function Results({ results, history, onSearch, user, prevPath, setPrevPath, setCurrPath, currPath }) {
     const [restaurants, setRestaurants] = useState(null);
     const [page, setPage] = useState(0);
     let { queryParam, locationParam } = useParams();
 
     useEffect(() => {
+        setPrevPath(currPath);
+        setCurrPath(history.location.pathname);
         fetch('/restaurants')
         .then((resp) => {
             if (resp.status === 200) {

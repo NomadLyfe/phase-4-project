@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
-function NewReview({ history }) {
+function NewReview({ history, prevPath, setPrevPath, setCurrPath, currPath }) {
+    useEffect(() => {
+        setPrevPath(currPath);
+        setCurrPath(history.location.pathname);
+    }, [])
+
     const { restaurantName, address } = useParams();
     
     const formSchema = yup.object().shape({

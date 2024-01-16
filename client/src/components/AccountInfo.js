@@ -1,8 +1,13 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function AccountInfo({ user, setUser }) {
+function AccountInfo({ user, setUser, history, prevPath, setPrevPath, setCurrPath, currPath }) {
+    useEffect(() => {
+        setPrevPath(currPath);
+        setCurrPath(history.location.pathname);
+    }, [])
+
     const [editOn, setEditOn] = useState(false)
 
     const formSchema = yup.object().shape({
@@ -80,7 +85,7 @@ function AccountInfo({ user, setUser }) {
                         {editOn ? <label id="pic" for="picinp">Profile Picture: </label> : null}
                         {editOn ? <input id="picinp" name="pic" type="text" onChange={formik.handleChange} value={formik.values.pic} /> : null}
                     </div>
-                    <br />
+                    {editOn ? <p>Leave the fields empty or with the original information in order to keep them from changing once saved. </p> : null}
                     {editOn ? <button type="submit">Save Changes</button> : null}
                 </form>
             </div>

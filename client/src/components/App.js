@@ -15,6 +15,8 @@ function App() {
     const [user, setUser] = useState(null);
     const [results, setResults] = useState(null);
     const history = useHistory();
+    const [prevPath, setPrevPath] = useState(null);
+    const [currPath, setCurrPath] = useState(history.location.pathname)
 
     useEffect(() => {
         fetch('/check_session').then((resp) => {
@@ -30,25 +32,25 @@ function App() {
             <main>
                 <Switch>
                     <Route exact path='/'>
-                        <Home />
+                        <Home history={history} currPath={currPath} prevPath={prevPath} setPrevPath={setPrevPath} setCurrPath={setCurrPath} />
                     </Route>
                     <Route exact path='/login'>
-                        <Login onLogin={setUser} user={user} history={history} />
+                        <Login onLogin={setUser} user={user} history={history} currPath={currPath} prevPath={prevPath} setPrevPath={setPrevPath} setCurrPath={setCurrPath} />
                     </Route>
                     <Route exact path='/signup'>
-                        <Signup onLogin={setUser} user={user} history={history} />
+                        <Signup onLogin={setUser} user={user} history={history} currPath={currPath} prevPath={prevPath} setPrevPath={setPrevPath} setCurrPath={setCurrPath} />
                     </Route>
                     <Route path={'/results/:queryParam/:locationParam'}>
-                        <Results results={results} history={history} onSearch={setResults} user={user} />
+                        <Results results={results} history={history} onSearch={setResults} user={user} currPath={currPath} prevPath={prevPath} setPrevPath={setPrevPath} setCurrPath={setCurrPath} />
                     </Route>
                     <Route exact path='/:restaurantName/:address/newreview'>
-                        <NewReview history={history} />
+                        <NewReview history={history} currPath={currPath} prevPath={prevPath} setPrevPath={setPrevPath} setCurrPath={setCurrPath} />
                     </Route>
                     <Route exact path='/:restaurantName/:address/reviews'>
-                        <Reviews history={history} user={user} />
+                        <Reviews history={history} user={user} currPath={currPath} prevPath={prevPath} setPrevPath={setPrevPath} setCurrPath={setCurrPath} />
                     </Route>
                     <Route exact path='/account'>
-                        <AccountInfo user={user} setUser={setUser} />
+                        <AccountInfo user={user} setUser={setUser} history={history} currPath={currPath} prevPath={prevPath} setPrevPath={setPrevPath} setCurrPath={setCurrPath} />
                     </Route>
                 </Switch>
                 <Footer user={user} />
