@@ -163,12 +163,12 @@ class Results(Resource):
         return main()
 
 class reviews_by_stars(Resource):
-    def get():
-        min_stars = 4
+    def get(min_stars):
+        min_stars = min_stars
         reviews = Review.query.filter(Review.stars > min_stars).all()
         return reviews, 200
 
-api.add_resource(reviews_by_stars, '/reviews/hi')
+api.add_resource(reviews_by_stars, '/reviews/<int:min_stars>')
 api.add_resource(Results, '/results')
 api.add_resource(Rest, '/rest', endpoint='rest')
 api.add_resource(Reviews, '/reviews', endpoint='reviews')
