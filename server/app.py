@@ -162,6 +162,13 @@ class Results(Resource):
                 sys.exit(f'Encountered HTTP error {error.code} on {error.url}:\n {error.read()}\nAbort program.')
         return main()
 
+class reviews_by_stars(Resource):
+    def get():
+        min_stars = 4
+        reviews = Review.query.filter(Review.stars > min_stars).all()
+        return reviews, 200
+
+api.add_resource(reviews_by_stars, '/reviews/{min_stars}')
 api.add_resource(Results, '/results')
 api.add_resource(Rest, '/rest', endpoint='rest')
 api.add_resource(Reviews, '/reviews', endpoint='reviews')
