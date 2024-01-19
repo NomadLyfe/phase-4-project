@@ -163,12 +163,11 @@ class Results(Resource):
         return main()
 
 class reviews_by_stars(Resource):
-    def get(min_stars):
-        min_stars = min_stars
-        reviews = Review.query.filter(Review.stars > min_stars).all()
+    def get(self, stars):
+        reviews = [review.to_dict() for review in Review.query.filter(Review.stars > stars).all()]
         return reviews, 200
 
-api.add_resource(reviews_by_stars, '/reviews/<int:min_stars>')
+api.add_resource(reviews_by_stars, '/reviews/<int:stars>')
 api.add_resource(Results, '/results')
 api.add_resource(Rest, '/rest', endpoint='rest')
 api.add_resource(Reviews, '/reviews', endpoint='reviews')
@@ -180,4 +179,3 @@ api.add_resource(Signup, '/signup', endpoint='signup')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
-
